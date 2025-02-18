@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "P3wYa35WmEy3TE0/SCuNbvH6kBhGu4ysIlcRJK62EXw=",
+  "Source": "LibraryAPI",
+  "BasePath": "_content/LibraryAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "LibraryAPI\\wwwroot",
+      "Source": "LibraryAPI",
+      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\",
+      "BasePath": "_content/LibraryAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
+      "SourceId": "LibraryAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\",
+      "BasePath": "_content/LibraryAPI",
+      "RelativePath": "uploads/John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg",
+      "SourceId": "LibraryAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\",
+      "BasePath": "_content/LibraryAPI",
+      "RelativePath": "uploads/photo_2024-12-22_14-35-12.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg"
+    }
+  ]
+}

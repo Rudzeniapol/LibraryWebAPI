@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using LibraryAPI.Controllers;
+using LibraryAPI.Data;
+using LibraryAPI.Models;
+using LibraryAPI.Services;
+using LibraryAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Xunit;
+
+namespace LibraryAPI.Tests
+{
+    public class AuthControllerTests : IDisposable
+    {
+        private readonly LibraryDbContext _context;
+        private readonly IUserService _userService;
+        private readonly AuthController _authController;
+        private readonly IConfiguration _configuration;
+
+        public AuthControllerTests()
+        {
+            var options = new DbContextOptionsBuilder<LibraryDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+            _context = new LibraryDbContext(options);
+
+            // Заполняем тестовую базу пользователей (если необходимо)
+            _userService = new UserService(_context);
+
+            // Создаем in-memory конфигурацию для JWT
+            var inMemorySettings = new Dictionary<string, string>
+            {
+                {"Jwt:Key", "super_mega_secret_key_1234567890"},
+                {"Jwt:Issuer", "LibraryAPI"},
+                {"Jwt:Audience", "LibraryUsers"},
+                {"Jwt:ExpirationMinutes", "60"}
+            };
+            _configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+
+            _authController = new AuthController(_userService, _configuration);
+        }
+
+        [Fact]
+        public async Task Register_ReturnsOk_WhenUserIsRegistered()
+        {
+            // Arrange
+            var newUser = new User { Username = "testUser", PasswordHash = "testPass", Role = "user" };
+
+            // Act
+            var result = await _authController.Register(newUser);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Contains("Пользователь зарегистрирован", okResult.Value.ToString());
+        }
+
+        [Fact]
+        public async Task Login_ReturnsToken_WhenCredentialsAreValid()
+        {
+            // Arrange: Регистрируем тестового пользователя
+            var newUser = new User { Username = "testUser", PasswordHash = "testPass", Role = "admin" };
+            await _userService.RegisterUserAsync(newUser.Username, newUser.PasswordHash, newUser.Role);
+
+            // Act: Выполняем логин
+            var result = await _authController.Login(new User { Username = "testUser", PasswordHash = "testPass" });
+            var okResult = Assert.IsType<OkObjectResult>(result);
+
+            // Получаем свойство "token" с помощью reflection
+            var tokenProperty = okResult.Value?.GetType().GetProperty("token");
+            Assert.NotNull(tokenProperty); // Проверяем, что свойство существует
+
+            var token = tokenProperty.GetValue(okResult.Value) as string;
+            Assert.False(string.IsNullOrEmpty(token)); // Проверяем, что токен не пустой
+        }
+
+
+        public void Dispose()
+        {
+            _context.Database.EnsureDeleted();
+            _context.Dispose();
+        }
+    }
+}
