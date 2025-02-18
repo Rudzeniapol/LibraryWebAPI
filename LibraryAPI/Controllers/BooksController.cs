@@ -1,8 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using AutoMapper;
+using LibraryAPI.DTOs;
 using LibraryAPI.Models;
 using LibraryAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace LibraryAPI.Controllers
@@ -15,39 +18,49 @@ namespace LibraryAPI.Controllers
         private readonly IBookService _bookService;
         private readonly IImageService _imageService;
         private readonly INotificationService _notificationService;
+        private readonly IMapper _mapper;
 
-        public BooksController(IBookService bookService, IImageService imageService, INotificationService notificationService)
+        public BooksController(IBookService bookService, IImageService imageService, INotificationService notificationService, IMapper mapper)
         {
             _notificationService = notificationService;
             _imageService = imageService;
             _bookService = bookService;
+            _mapper = mapper;
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks(
+        public async Task<ActionResult<IEnumerable<BookDTO>>> GetBooks(
             [FromQuery] int page = 1, 
             [FromQuery] int pageSize = 10,
             [FromQuery] string? genre = null,
             [FromQuery] string? title = null)
         {
-            var books = await _bookService.GetAllBooksAsync();
+            var booksQuery = _bookService.GetBooksQuery();
 
             if (!string.IsNullOrEmpty(genre))
-                books = books.Where(b => b.Genre.ToLower().Contains(genre.ToLower()));
+                booksQuery = booksQuery.Where(b => b.Genre.Contains(genre));
 
             if (!string.IsNullOrEmpty(title))
-                books = books.Where(b => b.Title.ToLower().Contains(title.ToLower()));
+                booksQuery = booksQuery.Where(b => b.Title.Contains(title));
 
-            var pagedBooks = books.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var books = await booksQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
-            return Ok(pagedBooks);
+            var booksDTO = _mapper.Map<IEnumerable<BookDTO>>(books);
+            return Ok(booksDTO);
         }
+
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetBook(int id)
+        public async Task<ActionResult<BookDTO>> GetBook(int id)
         {
             var book = await _bookService.GetBookByIdAsync(id);
-            return book != null ? Ok(book) : NotFound();
+            if (book == null) return NotFound();
+
+            var bookDTO = _mapper.Map<BookDTO>(book);
+            return Ok(bookDTO);
         }
         
         [HttpGet("isbn/{isbn}")]
@@ -85,11 +98,15 @@ namespace LibraryAPI.Controllers
         
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<ActionResult<Book>> CreateBook(Book book)
+        public async Task<ActionResult<BookDTO>> CreateBook(CreateBookDTO createBookDto)
         {
+            var book = _mapper.Map<Book>(createBookDto);
             await _bookService.AddBookAsync(book);
-            return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
+
+            var bookDTO = _mapper.Map<BookDTO>(book);
+            return CreatedAtAction(nameof(GetBook), new { id = book.Id }, bookDTO);
         }
+
 
         [HttpPost("{id}/borrow")]
         public async Task<IActionResult> BorrowBook(int id, [FromQuery] int days)

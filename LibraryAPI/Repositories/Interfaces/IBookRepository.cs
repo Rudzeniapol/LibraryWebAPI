@@ -1,4 +1,5 @@
-﻿using LibraryAPI.Models;
+﻿using LibraryAPI.DTOs;
+using LibraryAPI.Models;
 
 namespace LibraryAPI.Repositories.Interfaces
 {
@@ -13,5 +14,7 @@ namespace LibraryAPI.Repositories.Interfaces
         Task<bool> BookExistsAsync(int id);
         Task<bool> BorrowBookAsync(int bookId, int userId, int days);
         Task<bool> ReturnBookAsync(int bookId, int userId);
+        IQueryable<Book> GetBooksQuery();
+
     }
 }

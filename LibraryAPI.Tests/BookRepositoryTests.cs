@@ -16,7 +16,6 @@ namespace LibraryAPI.Tests
             _context = GetDbContext();
             _repository = new BookRepository(_context);
 
-            // Заполняем тестовую базу данными
             _context.Books.Add(new Book { Id = 1, Title = "1984", Genre = "Dystopia", ISBN = "12345", Description = "A classic novel" });
             _context.Books.Add(new Book { Id = 2, Title = "Brave New World", Genre = "Sci-Fi", ISBN = "67890", Description = "A futuristic novel" });
             _context.SaveChanges();
@@ -25,7 +24,7 @@ namespace LibraryAPI.Tests
         private LibraryDbContext GetDbContext()
         {
             var options = new DbContextOptionsBuilder<LibraryDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Создаёт новую БД для каждого теста
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             return new LibraryDbContext(options);
         }

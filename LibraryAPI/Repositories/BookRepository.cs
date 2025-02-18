@@ -69,7 +69,12 @@ namespace LibraryAPI.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
-
+        
+        public IQueryable<Book> GetBooksQuery()
+        {
+            return _context.Books.AsQueryable();
+        }
+        
         public async Task<bool> ReturnBookAsync(int bookId, int userId)
         {
             var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == bookId);

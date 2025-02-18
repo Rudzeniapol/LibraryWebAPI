@@ -27,7 +27,6 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task GetOverdueBooksAsync_ReturnsOverdueNotifications()
         {
-            // Arrange: создаем две книги, одна просрочена, другая нет
             var overdueBook = new Book 
             { 
                 Title = "Overdue Book", 
@@ -49,10 +48,8 @@ namespace LibraryAPI.Tests
             await _context.Books.AddRangeAsync(overdueBook, notOverdueBook);
             await _context.SaveChangesAsync();
 
-            // Act
             var notifications = await _notificationService.GetOverdueBooksAsync();
 
-            // Assert
             Assert.Single(notifications);
             Assert.Contains("Overdue Book", notifications.First());
         }

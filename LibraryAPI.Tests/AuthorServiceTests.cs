@@ -28,14 +28,11 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task GetAllAuthorsAsync_ReturnsAuthors()
         {
-            // Arrange
             var authors = new List<Author> { new Author { Id = 1, FirstName = "George", LastName = "Orwell" } };
             _mockRepo.Setup(repo => repo.GetAllAuthorsAsync()).ReturnsAsync(authors);
 
-            // Act
             var result = await _service.GetAllAuthorsAsync();
 
-            // Assert
             Assert.Single(result);
             Assert.Equal("George", result.First().FirstName);
         }
@@ -43,14 +40,11 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task GetAuthorByIdAsync_ReturnsAuthor_WhenExists()
         {
-            // Arrange
             var author = new Author { Id = 1, FirstName = "Aldous", LastName = "Huxley" };
             _mockRepo.Setup(repo => repo.GetAuthorByIdAsync(1)).ReturnsAsync(author);
 
-            // Act
             var result = await _service.GetAuthorByIdAsync(1);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("Huxley", result.LastName);
         }

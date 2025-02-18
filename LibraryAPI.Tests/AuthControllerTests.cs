@@ -26,11 +26,9 @@ namespace LibraryAPI.Tests
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             _context = new LibraryDbContext(options);
-
-            // Заполняем тестовую базу пользователей (если необходимо)
+            
             _userService = new UserService(_context);
 
-            // Создаем in-memory конфигурацию для JWT
             var inMemorySettings = new Dictionary<string, string>
             {
                 {"Jwt:Key", "super_mega_secret_key_1234567890"},
@@ -48,13 +46,10 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task Register_ReturnsOk_WhenUserIsRegistered()
         {
-            // Arrange
             var newUser = new User { Username = "testUser", PasswordHash = "testPass", Role = "user" };
 
-            // Act
             var result = await _authController.Register(newUser);
 
-            // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.Contains("Пользователь зарегистрирован", okResult.Value.ToString());
         }
@@ -62,20 +57,17 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task Login_ReturnsToken_WhenCredentialsAreValid()
         {
-            // Arrange: Регистрируем тестового пользователя
             var newUser = new User { Username = "testUser", PasswordHash = "testPass", Role = "admin" };
             await _userService.RegisterUserAsync(newUser.Username, newUser.PasswordHash, newUser.Role);
 
-            // Act: Выполняем логин
             var result = await _authController.Login(new User { Username = "testUser", PasswordHash = "testPass" });
             var okResult = Assert.IsType<OkObjectResult>(result);
 
-            // Получаем свойство "token" с помощью reflection
             var tokenProperty = okResult.Value?.GetType().GetProperty("token");
-            Assert.NotNull(tokenProperty); // Проверяем, что свойство существует
-
+            Assert.NotNull(tokenProperty); 
+            
             var token = tokenProperty.GetValue(okResult.Value) as string;
-            Assert.False(string.IsNullOrEmpty(token)); // Проверяем, что токен не пустой
+            Assert.False(string.IsNullOrEmpty(token));
         }
 
 

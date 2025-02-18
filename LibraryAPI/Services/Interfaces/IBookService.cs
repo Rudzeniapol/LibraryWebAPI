@@ -12,5 +12,6 @@ namespace LibraryAPI.Services.Interfaces
         Task DeleteBookAsync(int id);
         Task BorrowBookAsync(int bookId, int userId, int days);
         Task ReturnBookAsync(int bookId, int userId);
+        IQueryable<Book> GetBooksQuery();
     }
 }

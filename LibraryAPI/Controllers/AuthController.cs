@@ -50,8 +50,8 @@ namespace LibraryAPI.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), // 📌 Указываем user.Id как "sub"
-                new Claim(ClaimTypes.Role, user.Role), // 📌 Добавляем роль
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

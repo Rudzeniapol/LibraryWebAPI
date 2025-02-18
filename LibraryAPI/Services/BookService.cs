@@ -57,5 +57,10 @@ namespace LibraryAPI.Services
         {
             await _bookRepository.ReturnBookAsync(bookId, userId);
         }
+        public IQueryable<Book> GetBooksQuery()
+        {
+            return _bookRepository.GetBooksQuery();
+        }
+
     }
 }
