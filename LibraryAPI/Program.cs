@@ -85,13 +85,19 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
+    await db.Database.MigrateAsync();
+}
+
 //if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+//
+app.UseSwagger();
+app.UseSwaggerUI();
 //}
 
-//app.UseHttpsRedirection();
+//UseHttpsRedirection();
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseStaticFiles();
@@ -102,4 +108,3 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.Run();
-
