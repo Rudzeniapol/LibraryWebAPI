@@ -9,13 +9,13 @@
 
 ## Как запустить проект
 
-1. **Клонируйте репозиторий:**
+**Клонируйте репозиторий:**
 
    ```bash
    git clone https://github.com/Rudzeniapol/LibraryWebAPI.git
    cd LibraryAPI
    ```
-Соберите и запустите контейнеры:
+**Соберите и запустите контейнеры:**
 
 ```bash
 docker-compose up --build
@@ -28,18 +28,18 @@ Swagger UI: http://localhost:8080/swagger
 В файле docker-compose.yml используется образ MS SQL Server. Строка подключения для API определяется через переменную окружения ConnectionStrings__DefaultConnection.
 Если необходимо изменить настройки базы данных, отредактируйте переменные в docker-compose.yml.
 
-Сборка и тестирование
-Для локальной сборки проекта:
+## Сборка и тестирование
+**Для локальной сборки проекта:**
 
 ```bash
 dotnet build
 ```
-Для запуска тестов:
+**Для запуска тестов:**
 
 ```bash
 dotnet test
 ```
-Дополнительная информация
+## Дополнительная информация
 API построено на .NET 8.
 Для управления API используется Swagger UI, доступный по адресу http://localhost:8080/swagger.
 Используются технологии: EF Core, AutoMapper, JWT-аутентификация, FluentValidation (если реализовано) и т.д.
