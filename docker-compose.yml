@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: LibraryAPI/Dockerfile
     ports:
-      - "8080:80"
+      - "5270:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DefaultConnection=Server=db;Database=LibraryDB;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True

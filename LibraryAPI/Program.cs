@@ -91,13 +91,14 @@ var app = builder.Build();
     app.UseSwaggerUI();
 //}
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseStaticFiles();
 
 app.UseAuthentication(); 
 app.UseAuthorization();
+
 
 app.MapControllers();
 app.Run();
