@@ -2,15 +2,21 @@
 using System.Threading.Tasks;
 using LibraryAPI.Data;
 using LibraryAPI.Models;
+using LibraryAPI.Repositories;
+using LibraryAPI.Repositories.Interfaces;
 using LibraryAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Client;
+using Moq;
 using Xunit;
 
 namespace LibraryAPI.Tests
 {
-    public class UserServiceTests : IDisposable
+    public class UserServiceTests
     {
-        private readonly LibraryDbContext _context;
+        private readonly IUserRepository _context;
         private readonly UserService _userService;
 
         public UserServiceTests()
@@ -18,8 +24,9 @@ namespace LibraryAPI.Tests
             var options = new DbContextOptionsBuilder<LibraryDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            _context = new LibraryDbContext(options);
-            _userService = new UserService(_context);
+            _context = new UserRepository(new LibraryDbContext(options));
+            Mock<IConfiguration> configuration = new Mock<IConfiguration>();
+            _userService = new UserService(_context, configuration.Object);
         }
 
         [Fact]
@@ -30,7 +37,7 @@ namespace LibraryAPI.Tests
             string role = "user";
 
             var newUser = await _userService.RegisterUserAsync(username, password, role);
-            var userFromDb = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var userFromDb = await _context.GetUserByUsernameAsync(username);
 
             Assert.NotNull(userFromDb);
             Assert.Equal(username, userFromDb.Username);
@@ -40,19 +47,12 @@ namespace LibraryAPI.Tests
         public async Task GetUserByUsernameAsync_ReturnsCorrectUser()
         {
             var user = new User { Username = "testUser", PasswordHash = BCrypt.Net.BCrypt.HashPassword("testPass"), Role = "admin" };
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            await _context.AddUserAsync(user);
 
             var foundUser = await _userService.GetUserByUsernameAsync("testUser");
 
             Assert.NotNull(foundUser);
             Assert.Equal("admin", foundUser.Role);
-        }
-
-        public void Dispose()
-        {
-            _context.Database.EnsureDeleted();
-            _context.Dispose();
         }
     }
 }

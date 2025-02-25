@@ -4,30 +4,33 @@ using System.Threading.Tasks;
 using LibraryAPI.Controllers;
 using LibraryAPI.Data;
 using LibraryAPI.Models;
+using LibraryAPI.Repositories;
+using LibraryAPI.Repositories.Interfaces;
 using LibraryAPI.Services;
 using LibraryAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Moq;
 using Xunit;
 
 namespace LibraryAPI.Tests
 {
-    public class AuthControllerTests : IDisposable
+    public class AuthControllerTests
     {
-        private readonly LibraryDbContext _context;
+        private readonly IUserRepository _context;
         private readonly IUserService _userService;
         private readonly AuthController _authController;
-        private readonly IConfiguration _configuration;
+        private readonly Mock<IConfiguration> _configuration;
 
         public AuthControllerTests()
         {
             var options = new DbContextOptionsBuilder<LibraryDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            _context = new LibraryDbContext(options);
-            
-            _userService = new UserService(_context);
+            _context = new UserRepository(new LibraryDbContext(options));
+            _configuration = new Mock<IConfiguration>();
+            _userService = new UserService(_context, _configuration.Object);
 
             var inMemorySettings = new Dictionary<string, string>
             {
@@ -36,11 +39,8 @@ namespace LibraryAPI.Tests
                 {"Jwt:Audience", "LibraryUsers"},
                 {"Jwt:ExpirationMinutes", "60"}
             };
-            _configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(inMemorySettings)
-                .Build();
 
-            _authController = new AuthController(_userService, _configuration);
+            _authController = new AuthController(_userService);
         }
 
         [Fact]
@@ -68,13 +68,6 @@ namespace LibraryAPI.Tests
             
             var token = tokenProperty.GetValue(okResult.Value) as string;
             Assert.False(string.IsNullOrEmpty(token));
-        }
-
-
-        public void Dispose()
-        {
-            _context.Database.EnsureDeleted();
-            _context.Dispose();
         }
     }
 }

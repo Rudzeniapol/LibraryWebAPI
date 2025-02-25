@@ -6,6 +6,7 @@ namespace LibraryAPI.Services.Interfaces
     {
         Task<User?> GetUserByIdAsync(int id);
         Task<User?> GetUserByUsernameAsync(string username);
-        Task<User> RegisterUserAsync(string username, string password, string role);
+        Task<User?> RegisterUserAsync(string username, string password, string role);
+        Task<string?> LoginUserAsync(string username, string password);
     }
 }

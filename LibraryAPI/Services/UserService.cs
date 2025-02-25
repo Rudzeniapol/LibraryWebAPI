@@ -6,30 +6,33 @@ using LibraryAPI.Models;
 using LibraryAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
+using LibraryAPI.Repositories.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
 namespace LibraryAPI.Services
 {
     public class UserService : IUserService
     {
-        private readonly LibraryDbContext _context;
+        private readonly IUserRepository _userRepository;
+        private readonly IConfiguration _configuration;
 
-        public UserService(LibraryDbContext context)
+        public UserService(IUserRepository userRepository, IConfiguration configuration)
         {
-            _context = context;
+            _userRepository = userRepository;
+            _configuration = configuration;
         }
 
         public async Task<User?> GetUserByIdAsync(int id)
         {
-            return await _context.Users.Include(u => u.BorrowedBooks).FirstOrDefaultAsync(u => u.Id == id);
+            return await _userRepository.GetUserByIdAsync(id);
         }
-
+        
         public async Task<User?> GetUserByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return await _userRepository.GetUserByUsernameAsync(username);
         }
 
-        public async Task<User> RegisterUserAsync(string username, string password, string role)
+        public async Task<User?> RegisterUserAsync(string username, string password, string role)
         {
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
@@ -39,10 +42,43 @@ namespace LibraryAPI.Services
                 PasswordHash = hashedPassword,
                 Role = role
             };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            var existingUser = await _userRepository.GetUserByUsernameAsync(user.Username);
+            if (existingUser != null)
+                return null;
+            await _userRepository.AddUserAsync(user);
             return user;
+        }
+
+        public async Task<string?> LoginUserAsync(string username, string password)
+        {
+            var existingUser = await _userRepository.GetUserByUsernameAsync(username);
+            if (existingUser == null || !BCrypt.Net.BCrypt.Verify(password, existingUser.PasswordHash))
+                return null;
+            
+            return GenerateJwtToken(existingUser);
+        }
+        
+        private string GenerateJwtToken(User user)
+        {
+            var jwtSettings = _configuration.GetSection("Jwt");
+            var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
+
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: jwtSettings["Issuer"],
+                audience: jwtSettings["Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpirationMinutes"])),
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
