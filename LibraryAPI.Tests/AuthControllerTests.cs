@@ -21,7 +21,7 @@ namespace LibraryAPI.Tests
         private readonly IUserRepository _context;
         private readonly IUserService _userService;
         private readonly AuthController _authController;
-        private readonly Mock<IConfiguration> _configuration;
+        private readonly IConfiguration _configuration;
 
         public AuthControllerTests()
         {
@@ -29,17 +29,17 @@ namespace LibraryAPI.Tests
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             _context = new UserRepository(new LibraryDbContext(options));
-            _configuration = new Mock<IConfiguration>();
-            _userService = new UserService(_context, _configuration.Object);
-
-            var inMemorySettings = new Dictionary<string, string>
+            var inMemorySettings = new Dictionary<string, string?>
             {
                 {"Jwt:Key", "super_mega_secret_key_1234567890"},
                 {"Jwt:Issuer", "LibraryAPI"},
                 {"Jwt:Audience", "LibraryUsers"},
                 {"Jwt:ExpirationMinutes", "60"}
             };
-
+            _configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+            _userService = new UserService(_context, _configuration);
             _authController = new AuthController(_userService);
         }
 
@@ -57,10 +57,10 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task Login_ReturnsToken_WhenCredentialsAreValid()
         {
-            var newUser = new User { Username = "testUser", PasswordHash = "testPass", Role = "admin" };
-            await _userService.RegisterUserAsync(newUser.Username, newUser.PasswordHash, newUser.Role);
+            var newUser = new User { Username = "testUser1", PasswordHash = "testPass1", Role = "admin" };
+            Assert.NotNull(await _userService.RegisterUserAsync(newUser.Username, newUser.PasswordHash, newUser.Role));
 
-            var result = await _authController.Login(new User { Username = "testUser", PasswordHash = "testPass" });
+            var result = await _authController.Login(new User { Username = "testUser1", PasswordHash = "testPass1"});
             var okResult = Assert.IsType<OkObjectResult>(result);
 
             var tokenProperty = okResult.Value?.GetType().GetProperty("token");

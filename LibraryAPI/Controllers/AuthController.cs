@@ -30,7 +30,7 @@ namespace LibraryAPI.Controllers
         public async Task<IActionResult> Login([FromBody] User user)
         {
             var token = await _userService.LoginUserAsync(user.Username, user.PasswordHash);
-            return token == null ? Unauthorized("Неверное имя пользователя или пароль.") : Ok(token);
+            return token == null ? Unauthorized("Неверное имя пользователя или пароль.") : Ok(new {token});
         }
 
     }
