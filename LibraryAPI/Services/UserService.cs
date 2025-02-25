@@ -35,7 +35,7 @@ namespace LibraryAPI.Services
         public async Task<User?> RegisterUserAsync(string username, string password, string role)
         {
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
+            
             var user = new User
             {
                 Username = username,

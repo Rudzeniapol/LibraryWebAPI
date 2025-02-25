@@ -22,6 +22,10 @@ namespace LibraryAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] User user)
         {
+            if (!(user.Role.ToUpper() == "ADMIN" || user.Role.ToUpper() == "USER"))
+            {
+                return BadRequest("Некорректная роль.");
+            }
             var newUser = await _userService.RegisterUserAsync(user.Username, user.PasswordHash, user.Role);
             return newUser == null ? BadRequest("Данный пользователь уже существует.") : Ok(new { message = "Пользователь зарегистрирован", userId = newUser.Id });
         }
