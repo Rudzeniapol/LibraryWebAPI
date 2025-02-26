@@ -49,7 +49,7 @@ namespace LibraryAPI.Tests
         {
             var newUser = new RegisterUserDTO { Username = "testUser", Password = "testPass", Role = "user" };
 
-            var result = await _authController.Register(newUser);
+            var result = await _authController.Register(newUser, CancellationToken.None);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             Assert.Contains("Пользователь зарегистрирован", okResult.Value?.ToString());
@@ -58,10 +58,10 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task Login_ReturnsToken_WhenCredentialsAreValid()
         {
-            var newUser = new User { Username = "testUser1", PasswordHash = "testPass1", Role = "admin" };
-            Assert.NotNull(await _userService.RegisterUserAsync(newUser.Username, newUser.PasswordHash, newUser.Role));
+            var newUser = new RegisterUserDTO { Username = "testUser1", Password = "testPass1", Role = "admin" };
+            Assert.NotNull(await _userService.RegisterUserAsync(newUser, CancellationToken.None));
 
-            var result = await _authController.Login(new LoginUserDTO { Username = "testUser1", Password = "testPass1"});
+            var result = await _authController.Login(new LoginUserDTO { Username = "testUser1", Password = "testPass1"}, CancellationToken.None);
             var okResult = Assert.IsType<OkObjectResult>(result);
 
             var tokenProperty = okResult.Value?.GetType().GetProperty("token");

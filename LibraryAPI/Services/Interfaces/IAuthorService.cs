@@ -4,11 +4,11 @@ namespace LibraryAPI.Services.Interfaces
 {
     public interface IAuthorService
     {
-        Task<IEnumerable<Author>> GetAllAuthorsAsync();
-        Task<Author?> GetAuthorByIdAsync(int id);
-        Task AddAuthorAsync(Author author);
-        Task UpdateAuthorAsync(Author author);
-        Task DeleteAuthorAsync(int id);
-        Task<IEnumerable<Book>> GetBooksByAuthorAsync(int authorId);
+        Task<IEnumerable<Author>> GetAllAuthorsAsync(CancellationToken cancellationToken = default);
+        Task<Author?> GetAuthorByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task AddAuthorAsync(Author author, CancellationToken cancellationToken = default);
+        Task UpdateAuthorAsync(Author author, CancellationToken cancellationToken = default);
+        Task DeleteAuthorAsync(int id, CancellationToken cancellationToken = default);
+        Task<IEnumerable<Book>> GetBooksByAuthorAsync(int authorId, CancellationToken cancellationToken = default);
     }
 }

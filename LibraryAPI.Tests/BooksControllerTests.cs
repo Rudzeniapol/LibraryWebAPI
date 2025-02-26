@@ -53,10 +53,10 @@ namespace LibraryAPI.Tests
                 AuthorId = 1 
             };
 
-            _mockService.Setup(s => s.GetBookByIdAsync(1)).ReturnsAsync(book);
+            _mockService.Setup(s => s.GetBookByIdAsync(1, CancellationToken.None)).ReturnsAsync(book);
             _mockMapper.Setup(m => m.Map<Book>(It.IsAny<Book>())).Returns(bookDTO);
             
-            var result = await _controller.GetBook(1);
+            var result = await _controller.GetBook(1, CancellationToken.None);
             
             var actionResult = Assert.IsType<ActionResult<Book>>(result);
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
@@ -97,9 +97,9 @@ namespace LibraryAPI.Tests
             
             _mockMapper.Setup(m => m.Map<Book>(It.IsAny<CreateBookDTO>())).Returns(book);
             _mockMapper.Setup(m => m.Map<Book>(It.IsAny<Book>())).Returns(bookDTO);
-            _mockService.Setup(s => s.AddBookAsync(It.IsAny<Book>())).Returns(Task.CompletedTask);
+            _mockService.Setup(s => s.AddBookAsync(It.IsAny<Book>(), CancellationToken.None)).Returns(Task.CompletedTask);
             
-            var result = await _controller.CreateBook(createBookDto);
+            var result = await _controller.CreateBook(createBookDto, CancellationToken.None);
             
             var actionResult = Assert.IsType<ActionResult<Book>>(result);
             var createdAtAction = Assert.IsType<CreatedAtActionResult>(actionResult.Result);

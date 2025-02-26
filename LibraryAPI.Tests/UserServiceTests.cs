@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using LibraryAPI.Data;
+using LibraryAPI.DTOs;
 using LibraryAPI.Models;
 using LibraryAPI.Repositories;
 using LibraryAPI.Repositories.Interfaces;
@@ -32,15 +33,13 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task RegisterUserAsync_AddsUserToDatabase()
         {
-            string username = "testUser";
-            string password = "testPass";
-            string role = "user";
+            RegisterUserDTO user = new RegisterUserDTO() {Username = "username", Password = "password", Role = "admin"};
 
-            var newUser = await _userService.RegisterUserAsync(username, password, role);
-            var userFromDb = await _context.GetUserByUsernameAsync(username);
+            var newUser = await _userService.RegisterUserAsync(user, CancellationToken.None);
+            var userFromDb = await _context.GetUserByUsernameAsync(user.Username);
 
             Assert.NotNull(userFromDb);
-            Assert.Equal(username, userFromDb.Username);
+            Assert.Equal(user.Username, userFromDb.Username);
         }
 
         [Fact]

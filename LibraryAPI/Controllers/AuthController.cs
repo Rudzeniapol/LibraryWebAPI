@@ -19,22 +19,22 @@ namespace LibraryAPI.Controllers
         {
             _userService = userService;
         }
-        
+
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserDTO user)
+        public async Task<IActionResult> Register([FromBody] RegisterUserDTO user, CancellationToken cancellationToken)
         {
             if (!(user.Role.ToUpper() == "ADMIN" || user.Role.ToUpper() == "USER"))
             {
                 return BadRequest("Некорректная роль.");
             }
-            var newUser = await _userService.RegisterUserAsync(user.Username, user.Password, user.Role);
+            var newUser = await _userService.RegisterUserAsync(user, cancellationToken);
             return newUser == null ? BadRequest("Данный пользователь уже существует.") : Ok(new { message = "Пользователь зарегистрирован", userId = newUser.Id });
         }
         
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserDTO user)
+        public async Task<IActionResult> Login([FromBody] LoginUserDTO user, CancellationToken cancellationToken)
         {
-            var token = await _userService.LoginUserAsync(user.Username, user.Password);
+            var token = await _userService.LoginUserAsync(user, cancellationToken);
             return token == null ? Unauthorized("Неверное имя пользователя или пароль.") : Ok(new {token});
         }
 

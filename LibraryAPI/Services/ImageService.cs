@@ -18,7 +18,7 @@ namespace LibraryAPI.Services
             _cache = cache;
         }
 
-        public async Task<string?> UploadImageAsync(IFormFile? file, string bookTitle)
+        public async Task<string?> UploadImageAsync(IFormFile? file, string bookTitle, CancellationToken cancellationToken)
         {
             var uploadsFolder = Path.Combine(_environment.WebRootPath, UploadFolder);
             if (!Directory.Exists(uploadsFolder))
@@ -26,12 +26,12 @@ namespace LibraryAPI.Services
                 Directory.CreateDirectory(uploadsFolder);
             }
 
-            var fileName = $"{bookTitle.Replace(" ", "_")}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var fileName = $"{bookTitle.Replace(" ", "_")}_{Guid.NewGuid()}{Path.GetExtension(file?.FileName)}";
             var filePath = Path.Combine(uploadsFolder, fileName);
 
             await using(var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                await file.CopyToAsync(fileStream);
+                await file.CopyToAsync(fileStream, cancellationToken);
             }
             
             _cache.Set(fileName, filePath, TimeSpan.FromHours(1));
@@ -41,7 +41,7 @@ namespace LibraryAPI.Services
         
         public Task<byte[]> GetCachedImageAsync(string fileName)
         {
-            if (_cache.TryGetValue(fileName, out string filePath) && File.Exists(filePath))
+            if (_cache.TryGetValue(fileName, out string? filePath) && File.Exists(filePath))
             {
                 return Task.FromResult(File.ReadAllBytes(filePath));
             }

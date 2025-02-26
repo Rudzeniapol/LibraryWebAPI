@@ -17,45 +17,45 @@ namespace LibraryAPI.Services
             _bookRepository = bookRepository;
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooksAsync()
+        public async Task<IEnumerable<Book>> GetAllBooksAsync(CancellationToken cancellationToken)
         {
-            return await _bookRepository.GetAllBooksAsync();
+            return await _bookRepository.GetAllBooksAsync(cancellationToken);
         }
 
-        public async Task<Book?> GetBookByIdAsync(int id)
+        public async Task<Book?> GetBookByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _bookRepository.GetBookByIdAsync(id);
+            return await _bookRepository.GetBookByIdAsync(id, cancellationToken);
         }
 
-        public async Task<Book?> GetBookByISBNAsync(string isbn)
+        public async Task<Book?> GetBookByISBNAsync(string isbn, CancellationToken cancellationToken)
         {
-            return await _bookRepository.GetBookByISBNAsync(isbn);
+            return await _bookRepository.GetBookByISBNAsync(isbn, cancellationToken);
         }
 
-        public async Task AddBookAsync(Book book)
+        public async Task AddBookAsync(Book book, CancellationToken cancellationToken)
         {
-            await _bookRepository.AddBookAsync(book);
+            await _bookRepository.AddBookAsync(book, cancellationToken);
         }
 
-        public async Task UpdateBookAsync(Book book)
+        public async Task UpdateBookAsync(Book book, CancellationToken cancellationToken)
         {
-            await _bookRepository.UpdateBookAsync(book);
+            await _bookRepository.UpdateBookAsync(book, cancellationToken);
         }
 
-        public async Task DeleteBookAsync(int id)
+        public async Task DeleteBookAsync(int id, CancellationToken cancellationToken)
         {
-            await _bookRepository.DeleteBookAsync(id);
+            await _bookRepository.DeleteBookAsync(id, cancellationToken);
         }
         
-        public async Task BorrowBookAsync(int bookId, int userId, int days)
+        public async Task BorrowBookAsync(int bookId, int userId, int days, CancellationToken cancellationToken)
         {
-            await _bookRepository.BorrowBookAsync(bookId, userId, days);
+            await _bookRepository.BorrowBookAsync(bookId, userId, days, cancellationToken);
             
         }
 
-        public async Task ReturnBookAsync(int bookId, int userId)
+        public async Task ReturnBookAsync(int bookId, int userId, CancellationToken cancellationToken)
         {
-            await _bookRepository.ReturnBookAsync(bookId, userId);
+            await _bookRepository.ReturnBookAsync(bookId, userId, cancellationToken);
         }
         public IQueryable<Book> GetBooksQuery()
         {

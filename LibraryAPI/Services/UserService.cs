@@ -6,6 +6,7 @@ using LibraryAPI.Models;
 using LibraryAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
+using LibraryAPI.DTOs;
 using LibraryAPI.Repositories.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
@@ -22,37 +23,36 @@ namespace LibraryAPI.Services
             _configuration = configuration;
         }
 
-        public async Task<User?> GetUserByIdAsync(int id)
+        public async Task<User?> GetUserByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _userRepository.GetUserByIdAsync(id);
+            return await _userRepository.GetUserByIdAsync(id, cancellationToken);
         }
         
-        public async Task<User?> GetUserByUsernameAsync(string username)
+        public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
         {
-            return await _userRepository.GetUserByUsernameAsync(username);
+            return await _userRepository.GetUserByUsernameAsync(username, cancellationToken);
         }
 
-        public async Task<User?> RegisterUserAsync(string username, string password, string role)
+        public async Task<User?> RegisterUserAsync(RegisterUserDTO registerUser, CancellationToken cancellationToken)
         {
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-            
-            var user = new User
-            {
-                Username = username,
-                PasswordHash = hashedPassword,
-                Role = role
-            };
-            var existingUser = await _userRepository.GetUserByUsernameAsync(user.Username);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerUser.Password);
+            var existingUser = await _userRepository.GetUserByUsernameAsync(registerUser.Username, cancellationToken);
             if (existingUser != null)
                 return null;
-            await _userRepository.AddUserAsync(user);
+            var user = new User
+            {
+                Username = registerUser.Username,
+                PasswordHash = hashedPassword,
+                Role = registerUser.Role,
+            };
+            await _userRepository.AddUserAsync(user, cancellationToken);
             return user;
         }
 
-        public async Task<string?> LoginUserAsync(string username, string password)
+        public async Task<string?> LoginUserAsync(LoginUserDTO loginUser, CancellationToken cancellationToken = default)
         {
-            var existingUser = await _userRepository.GetUserByUsernameAsync(username);
-            if (existingUser == null || !BCrypt.Net.BCrypt.Verify(password, existingUser.PasswordHash))
+            var existingUser = await _userRepository.GetUserByUsernameAsync(loginUser.Username, cancellationToken);
+            if (existingUser == null || !BCrypt.Net.BCrypt.Verify(loginUser.Password, existingUser.PasswordHash))
                 return null;
             
             return GenerateJwtToken(existingUser);

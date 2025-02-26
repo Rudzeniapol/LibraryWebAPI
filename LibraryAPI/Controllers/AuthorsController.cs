@@ -18,41 +18,41 @@ namespace LibraryAPI.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
+        public async Task<ActionResult<IEnumerable<Author>>> GetAuthors(CancellationToken cancellationToken)
         {
-            var authors = await _authorService.GetAllAuthorsAsync();
+            var authors = await _authorService.GetAllAuthorsAsync(cancellationToken);
             return Ok(authors);
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<Author>> GetAuthor(int id)
+        public async Task<ActionResult<Author>> GetAuthor(int id, CancellationToken cancellationToken)
         {
-            var author = await _authorService.GetAuthorByIdAsync(id);
+            var author = await _authorService.GetAuthorByIdAsync(id, cancellationToken);
             return author != null ? Ok(author) : NotFound();
         }
         
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<ActionResult<Author>> CreateAuthor(Author author)
+        public async Task<ActionResult<Author>> CreateAuthor(Author author, CancellationToken cancellationToken)
         {
-            await _authorService.AddAuthorAsync(author);
+            await _authorService.AddAuthorAsync(author, cancellationToken);
             return CreatedAtAction(nameof(GetAuthor), new { id = author.Id }, author);
         }
         
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAuthor(int id, Author author)
+        public async Task<IActionResult> UpdateAuthor(int id, Author author, CancellationToken cancellationToken)
         {
             if (id != author.Id) return BadRequest("ID автора не совпадает.");
-            await _authorService.UpdateAuthorAsync(author);
+            await _authorService.UpdateAuthorAsync(author, cancellationToken);
             return NoContent();
         }
         
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAuthor(int id)
+        public async Task<IActionResult> DeleteAuthor(int id, CancellationToken cancellationToken)
         {
-            await _authorService.DeleteAuthorAsync(id);
+            await _authorService.DeleteAuthorAsync(id, cancellationToken);
             return NoContent();
         }
         

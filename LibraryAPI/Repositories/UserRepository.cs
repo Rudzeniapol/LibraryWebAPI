@@ -14,19 +14,19 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<User?> GetUserByUsernameAsync(string username)
+    public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(username));
+        return await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(username), cancellationToken);
     }
 
-    public async Task AddUserAsync(User user)
+    public async Task AddUserAsync(User user, CancellationToken cancellationToken = default)
     {
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
+        await _context.Users.AddAsync(user, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<User?> GetUserByIdAsync(int userId)
+    public async Task<User?> GetUserByIdAsync(int userId, CancellationToken cancellationToken = default)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
     }
 }

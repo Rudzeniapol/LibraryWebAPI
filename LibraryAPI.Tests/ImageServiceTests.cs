@@ -44,7 +44,7 @@ namespace LibraryAPI.Tests
                 ContentType = "image/jpeg"
             };
 
-            var url = await _imageService.UploadImageAsync(formFile, "TestBook");
+            var url = await _imageService.UploadImageAsync(formFile, "TestBook", CancellationToken.None);
 
             Assert.False(string.IsNullOrEmpty(url));
             string filePath = Path.Combine(_testWebRoot, url.TrimStart('/'));

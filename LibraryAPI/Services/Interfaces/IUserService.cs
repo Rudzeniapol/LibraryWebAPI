@@ -1,12 +1,13 @@
-﻿using LibraryAPI.Models;
+﻿using LibraryAPI.DTOs;
+using LibraryAPI.Models;
 
 namespace LibraryAPI.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<User?> GetUserByIdAsync(int id);
-        Task<User?> GetUserByUsernameAsync(string username);
-        Task<User?> RegisterUserAsync(string username, string password, string role);
-        Task<string?> LoginUserAsync(string username, string password);
+        Task<User?> GetUserByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default);
+        Task<User?> RegisterUserAsync(RegisterUserDTO registerUser, CancellationToken cancellationToken = default);
+        Task<string?> LoginUserAsync(LoginUserDTO user, CancellationToken cancellationToken = default);
     }
 }

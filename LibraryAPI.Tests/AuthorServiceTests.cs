@@ -31,7 +31,7 @@ namespace LibraryAPI.Tests
             var authors = new List<Author> { new Author { Id = 1, FirstName = "George", LastName = "Orwell" } };
             _mockRepo.Setup(repo => repo.GetAllAuthorsAsync(CancellationToken.None)).ReturnsAsync(authors);
 
-            var result = await _service.GetAllAuthorsAsync();
+            var result = await _service.GetAllAuthorsAsync(CancellationToken.None);
 
             Assert.Single(result);
             Assert.Equal("George", result.First().FirstName);
@@ -43,7 +43,7 @@ namespace LibraryAPI.Tests
             var author = new Author { Id = 1, FirstName = "Aldous", LastName = "Huxley" };
             _mockRepo.Setup(repo => repo.GetAuthorByIdAsync(1, CancellationToken.None)).ReturnsAsync(author);
 
-            var result = await _service.GetAuthorByIdAsync(1);
+            var result = await _service.GetAuthorByIdAsync(1, CancellationToken.None);
 
             Assert.NotNull(result);
             Assert.Equal("Huxley", result.LastName);

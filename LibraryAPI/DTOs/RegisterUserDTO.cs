@@ -2,7 +2,7 @@
 
 public record RegisterUserDTO
 {
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string Role { get; set; } = "user";
+    public string Username { get; init; } = null!;
+    public string Password { get; init; } = null!;
+    public string Role { get; init; } = "user";
 }

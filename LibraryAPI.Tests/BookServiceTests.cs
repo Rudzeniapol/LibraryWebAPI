@@ -43,7 +43,7 @@ namespace LibraryAPI.Tests
                 AuthorId = author.Id 
             };
 
-            await _bookService.AddBookAsync(book);
+            await _bookService.AddBookAsync(book, CancellationToken.None);
 
             var result = await _context.Books.FirstOrDefaultAsync(b => b.Title == "1984");
             Assert.NotNull(result);
@@ -61,7 +61,7 @@ namespace LibraryAPI.Tests
             });
             await _context.SaveChangesAsync();
 
-            var books = await _bookService.GetAllBooksAsync();
+            var books = await _bookService.GetAllBooksAsync(CancellationToken.None);
 
             Assert.Equal(2, books.Count());
         }
@@ -73,7 +73,7 @@ namespace LibraryAPI.Tests
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
 
-            var result = await _bookService.GetBookByIdAsync(1);
+            var result = await _bookService.GetBookByIdAsync(1, CancellationToken.None);
 
             Assert.NotNull(result);
             Assert.Equal("1984", result.Title);
@@ -104,7 +104,7 @@ namespace LibraryAPI.Tests
                 Description = "Updated description", 
                 AuthorId = 1 
             };
-            await _bookService.UpdateBookAsync(updatedBook);
+            await _bookService.UpdateBookAsync(updatedBook, CancellationToken.None);
 
             var result = await _context.Books.FirstOrDefaultAsync(b => b.Id == book.Id);
             Assert.NotNull(result);
@@ -119,7 +119,7 @@ namespace LibraryAPI.Tests
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
 
-            await _bookService.DeleteBookAsync(1);
+            await _bookService.DeleteBookAsync(1, CancellationToken.None);
             var result = await _context.Books.FirstOrDefaultAsync(b => b.Id == 1);
 
             Assert.Null(result);

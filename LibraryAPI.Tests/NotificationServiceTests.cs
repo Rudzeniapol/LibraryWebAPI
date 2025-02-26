@@ -48,7 +48,7 @@ namespace LibraryAPI.Tests
             await _context.Books.AddRangeAsync(overdueBook, notOverdueBook);
             await _context.SaveChangesAsync();
 
-            var notifications = await _notificationService.GetOverdueBooksAsync();
+            var notifications = await _notificationService.GetOverdueBooksAsync(CancellationToken.None);
 
             Assert.Single(notifications);
             Assert.Contains("Overdue Book", notifications.First());

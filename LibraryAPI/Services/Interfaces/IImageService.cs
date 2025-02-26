@@ -2,6 +2,6 @@
 {
     public interface IImageService
     {
-        Task<string?> UploadImageAsync(IFormFile file, string bookTitle);
+        Task<string?> UploadImageAsync(IFormFile file, string bookTitle, CancellationToken cancellationToken = default);
     }
 }
