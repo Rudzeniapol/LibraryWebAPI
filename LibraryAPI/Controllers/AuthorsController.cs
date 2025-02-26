@@ -17,6 +17,7 @@ namespace LibraryAPI.Controllers
             _authorService = authorService;
         }
         
+        [Authorize(Policy = "AllUsers")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors(CancellationToken cancellationToken)
         {
@@ -24,6 +25,7 @@ namespace LibraryAPI.Controllers
             return Ok(authors);
         }
         
+        [Authorize(Policy = "AllUsers")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Author>> GetAuthor(int id, CancellationToken cancellationToken)
         {
@@ -31,7 +33,7 @@ namespace LibraryAPI.Controllers
             return author != null ? Ok(author) : NotFound();
         }
         
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<ActionResult<Author>> CreateAuthor(Author author, CancellationToken cancellationToken)
         {
@@ -39,7 +41,7 @@ namespace LibraryAPI.Controllers
             return CreatedAtAction(nameof(GetAuthor), new { id = author.Id }, author);
         }
         
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAuthor(int id, Author author, CancellationToken cancellationToken)
         {
@@ -48,7 +50,7 @@ namespace LibraryAPI.Controllers
             return NoContent();
         }
         
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthor(int id, CancellationToken cancellationToken)
         {
@@ -56,6 +58,7 @@ namespace LibraryAPI.Controllers
             return NoContent();
         }
         
+        [Authorize(Policy = "AllUsers")]
         [HttpGet("{id}/books")]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooksByAuthor(int id)
         {

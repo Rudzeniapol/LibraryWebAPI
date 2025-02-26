@@ -28,6 +28,7 @@ namespace LibraryAPI.Controllers
             _mapper = mapper;
         }
         
+        [Authorize(Policy = "AllUsers")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks(
             CancellationToken cancellationToken,
@@ -53,7 +54,7 @@ namespace LibraryAPI.Controllers
             return Ok(booksDTO);
         }
 
-        
+        [Authorize(Policy = "AllUsers")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetBook(int id, CancellationToken cancellationToken)
         {
@@ -64,6 +65,7 @@ namespace LibraryAPI.Controllers
             return Ok(bookDTO);
         }
         
+        [Authorize(Policy = "AllUsers")]
         [HttpGet("isbn/{isbn}")]
         public async Task<ActionResult<Book>> GetBookByISBN(string isbn, CancellationToken cancellationToken)
         {
@@ -71,6 +73,7 @@ namespace LibraryAPI.Controllers
             return book != null ? Ok(book) : NotFound();
         }
 
+        [Authorize(Policy = "AllUsers")]
         [HttpGet("overdue")]
         public async Task<IActionResult> GetOverdueBooks(CancellationToken cancellationToken)
         {
@@ -79,7 +82,7 @@ namespace LibraryAPI.Controllers
         }
 
         
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost("{id}/upload-image")]
         public async Task<IActionResult> UploadImage(int id, IFormFile file, CancellationToken cancellationToken)
         {
@@ -97,7 +100,7 @@ namespace LibraryAPI.Controllers
             return Ok(new { message = "Изображение загружено", imageUrl });
         }
         
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<ActionResult<Book>> CreateBook(CreateBookDTO createBookDto, CancellationToken cancellationToken)
         {
@@ -108,7 +111,7 @@ namespace LibraryAPI.Controllers
             return CreatedAtAction(nameof(GetBook), new { id = book.Id }, bookDTO);
         }
 
-
+        [Authorize(Policy = "AllUsers")]
         [HttpPost("{id}/borrow")]
         public async Task<IActionResult> BorrowBook(int id, [FromQuery] int days)
         {
@@ -121,7 +124,7 @@ namespace LibraryAPI.Controllers
             return Ok("Книга успешно взята.");
         }
 
-        
+        [Authorize(Policy = "AllUsers")]
         [HttpPost("{id}/return")]
         public async Task<IActionResult> ReturnBook(int id, CancellationToken cancellationToken)
         {
@@ -135,7 +138,7 @@ namespace LibraryAPI.Controllers
             return Ok("Книга успешно возвращена.");
         }
         
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBook(int id, Book book, CancellationToken cancellationToken)
         {
@@ -144,7 +147,7 @@ namespace LibraryAPI.Controllers
             return NoContent();
         }
         
-        [Authorize(Roles = "admin")]
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id, CancellationToken cancellationToken)
         {
