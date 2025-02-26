@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using LibraryAPI;
+using LibraryAPI.DTOs;
 using LibraryAPI.Middlewares;
 using Microsoft.OpenApi.Models;
 
@@ -22,7 +23,7 @@ builder.Services.AddDbContext<LibraryDbContext>(options =>
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
-    {
+    {   
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -74,7 +75,9 @@ builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddAutoMapper(typeof(AuthorMappingProfile));
+builder.Services.AddAutoMapper(typeof(BookMappingProfile));
+builder.Services.AddAutoMapper(typeof(UserMappingProfile));
 
 builder.Services.AddMemoryCache();
 

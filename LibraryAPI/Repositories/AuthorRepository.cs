@@ -14,30 +14,30 @@ namespace LibraryAPI.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Author>> GetAllAuthorsAsync()
+        public async Task<IEnumerable<Author>> GetAllAuthorsAsync(CancellationToken cancellationToken = default)
         {
             return await _context.Authors.Include(a => a.Books).ToListAsync();
         }
 
-        public async Task<Author?> GetAuthorByIdAsync(int id)
+        public async Task<Author?> GetAuthorByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _context.Authors.Include(a => a.Books)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task AddAuthorAsync(Author author)
+        public async Task AddAuthorAsync(Author author, CancellationToken cancellationToken = default)
         {
             _context.Authors.Add(author);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAuthorAsync(Author author)
+        public async Task UpdateAuthorAsync(Author author, CancellationToken cancellationToken = default)
         {
             _context.Authors.Update(author);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAuthorAsync(int id)
+        public async Task DeleteAuthorAsync(int id, CancellationToken cancellationToken = default)
         {
             var author = await _context.Authors.FindAsync(id);
             if (author != null)
@@ -47,12 +47,12 @@ namespace LibraryAPI.Repositories
             }
         }
 
-        public async Task<IEnumerable<Book>> GetBooksByAuthorAsync(int authorId)
+        public async Task<IEnumerable<Book>> GetBooksByAuthorAsync(int authorId, CancellationToken cancellationToken = default)
         {
             return await _context.Books.Where(b => b.AuthorId == authorId).ToListAsync();
         }
 
-        public async Task<bool> AuthorExistsAsync(int id)
+        public async Task<bool> AuthorExistsAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _context.Authors.AnyAsync(a => a.Id == id);
         }

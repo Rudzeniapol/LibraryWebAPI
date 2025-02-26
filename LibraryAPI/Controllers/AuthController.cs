@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using LibraryAPI.DTOs;
 
 namespace LibraryAPI.Controllers
 {
@@ -20,20 +21,20 @@ namespace LibraryAPI.Controllers
         }
         
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User user)
+        public async Task<IActionResult> Register([FromBody] RegisterUserDTO user)
         {
             if (!(user.Role.ToUpper() == "ADMIN" || user.Role.ToUpper() == "USER"))
             {
                 return BadRequest("Некорректная роль.");
             }
-            var newUser = await _userService.RegisterUserAsync(user.Username, user.PasswordHash, user.Role);
+            var newUser = await _userService.RegisterUserAsync(user.Username, user.Password, user.Role);
             return newUser == null ? BadRequest("Данный пользователь уже существует.") : Ok(new { message = "Пользователь зарегистрирован", userId = newUser.Id });
         }
         
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] User user)
+        public async Task<IActionResult> Login([FromBody] LoginUserDTO user)
         {
-            var token = await _userService.LoginUserAsync(user.Username, user.PasswordHash);
+            var token = await _userService.LoginUserAsync(user.Username, user.Password);
             return token == null ? Unauthorized("Неверное имя пользователя или пароль.") : Ok(new {token});
         }
 

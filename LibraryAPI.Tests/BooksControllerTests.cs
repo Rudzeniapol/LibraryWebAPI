@@ -43,7 +43,7 @@ namespace LibraryAPI.Tests
                 Description = "desc", 
                 AuthorId = 1 
             };
-            var bookDTO = new BookDTO 
+            var bookDTO = new Book 
             { 
                 Id = 1, 
                 Title = "1984", 
@@ -54,11 +54,11 @@ namespace LibraryAPI.Tests
             };
 
             _mockService.Setup(s => s.GetBookByIdAsync(1)).ReturnsAsync(book);
-            _mockMapper.Setup(m => m.Map<BookDTO>(It.IsAny<Book>())).Returns(bookDTO);
+            _mockMapper.Setup(m => m.Map<Book>(It.IsAny<Book>())).Returns(bookDTO);
             
             var result = await _controller.GetBook(1);
             
-            var actionResult = Assert.IsType<ActionResult<BookDTO>>(result);
+            var actionResult = Assert.IsType<ActionResult<Book>>(result);
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
             Assert.Equal(bookDTO, okResult.Value);
         }
@@ -85,7 +85,7 @@ namespace LibraryAPI.Tests
                 AuthorId = createBookDto.AuthorId
             };
 
-            var bookDTO = new BookDTO
+            var bookDTO = new Book
             {
                 Id = book.Id,
                 Title = book.Title,
@@ -96,14 +96,14 @@ namespace LibraryAPI.Tests
             };
             
             _mockMapper.Setup(m => m.Map<Book>(It.IsAny<CreateBookDTO>())).Returns(book);
-            _mockMapper.Setup(m => m.Map<BookDTO>(It.IsAny<Book>())).Returns(bookDTO);
+            _mockMapper.Setup(m => m.Map<Book>(It.IsAny<Book>())).Returns(bookDTO);
             _mockService.Setup(s => s.AddBookAsync(It.IsAny<Book>())).Returns(Task.CompletedTask);
             
             var result = await _controller.CreateBook(createBookDto);
             
-            var actionResult = Assert.IsType<ActionResult<BookDTO>>(result);
+            var actionResult = Assert.IsType<ActionResult<Book>>(result);
             var createdAtAction = Assert.IsType<CreatedAtActionResult>(actionResult.Result);
-            var returnedBookDto = Assert.IsType<BookDTO>(createdAtAction.Value);
+            var returnedBookDto = Assert.IsType<Book>(createdAtAction.Value);
 
             Assert.Equal(bookDTO.Id, returnedBookDto.Id);
             Assert.Equal(bookDTO.Title, returnedBookDto.Title);

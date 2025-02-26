@@ -29,7 +29,7 @@ namespace LibraryAPI.Tests
         public async Task GetAllAuthorsAsync_ReturnsAuthors()
         {
             var authors = new List<Author> { new Author { Id = 1, FirstName = "George", LastName = "Orwell" } };
-            _mockRepo.Setup(repo => repo.GetAllAuthorsAsync()).ReturnsAsync(authors);
+            _mockRepo.Setup(repo => repo.GetAllAuthorsAsync(CancellationToken.None)).ReturnsAsync(authors);
 
             var result = await _service.GetAllAuthorsAsync();
 
@@ -41,7 +41,7 @@ namespace LibraryAPI.Tests
         public async Task GetAuthorByIdAsync_ReturnsAuthor_WhenExists()
         {
             var author = new Author { Id = 1, FirstName = "Aldous", LastName = "Huxley" };
-            _mockRepo.Setup(repo => repo.GetAuthorByIdAsync(1)).ReturnsAsync(author);
+            _mockRepo.Setup(repo => repo.GetAuthorByIdAsync(1, CancellationToken.None)).ReturnsAsync(author);
 
             var result = await _service.GetAuthorByIdAsync(1);
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LibraryAPI.Controllers;
 using LibraryAPI.Data;
+using LibraryAPI.DTOs;
 using LibraryAPI.Models;
 using LibraryAPI.Repositories;
 using LibraryAPI.Repositories.Interfaces;
@@ -46,7 +47,7 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task Register_ReturnsOk_WhenUserIsRegistered()
         {
-            var newUser = new User { Username = "testUser", PasswordHash = "testPass", Role = "user" };
+            var newUser = new RegisterUserDTO { Username = "testUser", Password = "testPass", Role = "user" };
 
             var result = await _authController.Register(newUser);
 
@@ -60,7 +61,7 @@ namespace LibraryAPI.Tests
             var newUser = new User { Username = "testUser1", PasswordHash = "testPass1", Role = "admin" };
             Assert.NotNull(await _userService.RegisterUserAsync(newUser.Username, newUser.PasswordHash, newUser.Role));
 
-            var result = await _authController.Login(new User { Username = "testUser1", PasswordHash = "testPass1"});
+            var result = await _authController.Login(new LoginUserDTO { Username = "testUser1", Password = "testPass1"});
             var okResult = Assert.IsType<OkObjectResult>(result);
 
             var tokenProperty = okResult.Value?.GetType().GetProperty("token");

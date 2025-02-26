@@ -29,7 +29,7 @@ namespace LibraryAPI.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookDTO>>> GetBooks(
+        public async Task<ActionResult<IEnumerable<Book>>> GetBooks(
             [FromQuery] int page = 1, 
             [FromQuery] int pageSize = 10,
             [FromQuery] string? genre = null,
@@ -48,18 +48,18 @@ namespace LibraryAPI.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            var booksDTO = _mapper.Map<IEnumerable<BookDTO>>(books);
+            var booksDTO = _mapper.Map<IEnumerable<Book>>(books);
             return Ok(booksDTO);
         }
 
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookDTO>> GetBook(int id)
+        public async Task<ActionResult<Book>> GetBook(int id)
         {
             var book = await _bookService.GetBookByIdAsync(id);
             if (book == null) return NotFound();
 
-            var bookDTO = _mapper.Map<BookDTO>(book);
+            var bookDTO = _mapper.Map<Book>(book);
             return Ok(bookDTO);
         }
         
@@ -98,12 +98,12 @@ namespace LibraryAPI.Controllers
         
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<ActionResult<BookDTO>> CreateBook(CreateBookDTO createBookDto)
+        public async Task<ActionResult<Book>> CreateBook(CreateBookDTO createBookDto)
         {
             var book = _mapper.Map<Book>(createBookDto);
             await _bookService.AddBookAsync(book);
 
-            var bookDTO = _mapper.Map<BookDTO>(book);
+            var bookDTO = _mapper.Map<Book>(book);
             return CreatedAtAction(nameof(GetBook), new { id = book.Id }, bookDTO);
         }
 
@@ -111,7 +111,7 @@ namespace LibraryAPI.Controllers
         [HttpPost("{id}/borrow")]
         public async Task<IActionResult> BorrowBook(int id, [FromQuery] int days)
         {
-            var userClaim = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+            var userClaim =  User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
             if (string.IsNullOrEmpty(userClaim) || !int.TryParse(userClaim, out int userId))
             {
                 return Unauthorized("Ошибка аутентификации: не удалось определить пользователя.");
