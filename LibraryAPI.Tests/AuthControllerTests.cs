@@ -51,7 +51,7 @@ namespace LibraryAPI.Tests
             var result = await _authController.Register(newUser);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
-            Assert.Contains("Пользователь зарегистрирован", okResult.Value.ToString());
+            Assert.Contains("Пользователь зарегистрирован", okResult.Value?.ToString());
         }
 
         [Fact]

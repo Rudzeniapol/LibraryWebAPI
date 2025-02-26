@@ -25,6 +25,10 @@ namespace LibraryAPI.Data
                 .WithMany(a => a.Books)
                 .HasForeignKey(b => b.AuthorId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<Book>()
+                .Property(b => b.AuthorId)
+                .IsRequired();
 
             modelBuilder.Entity<Book>()
                 .Property(b => b.ISBN)
@@ -42,6 +46,7 @@ namespace LibraryAPI.Data
             
             modelBuilder.Entity<Book>()
                 .Property(b => b.Genre)
+                .IsRequired()
                 .HasMaxLength(100);
 
             modelBuilder.Entity<Book>()
@@ -66,6 +71,19 @@ namespace LibraryAPI.Data
                 .Property(a => a.Country)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Username)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.PasswordHash)
+                .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Role)
+                .IsRequired();
         }
     }
 }
