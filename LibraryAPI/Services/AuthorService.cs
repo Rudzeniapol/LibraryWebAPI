@@ -1,4 +1,5 @@
-﻿using LibraryAPI.Models;
+﻿using LibraryAPI.Exceptions;
+using LibraryAPI.Models;
 using LibraryAPI.Repositories.Interfaces;
 using LibraryAPI.Services.Interfaces;
 
@@ -20,26 +21,51 @@ namespace LibraryAPI.Services
 
         public async Task<Author?> GetAuthorByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _authorRepository.GetAuthorByIdAsync(id, cancellationToken);
+            var author = await _authorRepository.GetAuthorByIdAsync(id, cancellationToken);
+            if (author == null)
+            {
+                throw new NotFoundException($"Автор с id \"{id}\" не найден");
+            }
+            return author;
         }
 
         public async Task AddAuthorAsync(Author author, CancellationToken cancellationToken)
         {
+            var existingAuthor = await _authorRepository.GetAuthorByIdAsync(author.Id, cancellationToken);
+            if (existingAuthor != null)
+            {
+                throw new EntityExistsException("Данный автор уже существует");
+            }
             await _authorRepository.AddAuthorAsync(author, cancellationToken);
         }
 
         public async Task UpdateAuthorAsync(Author author, CancellationToken cancellationToken)
         {
+            var existingAuthor = await _authorRepository.GetAuthorByIdAsync(author.Id, cancellationToken);
+            if (existingAuthor == null)
+            {
+                throw new NotFoundException($"Автор с id \"{author.Id}\" не найден");
+            }
             await _authorRepository.UpdateAuthorAsync(author, cancellationToken);
         }
 
         public async Task DeleteAuthorAsync(int id, CancellationToken cancellationToken)
         {
+            var author = await _authorRepository.GetAuthorByIdAsync(id, cancellationToken);
+            if (author == null)
+            {
+                throw new NotFoundException($"Автор с id \"{id}\" не найден");
+            }
             await _authorRepository.DeleteAuthorAsync(id, cancellationToken);
         }
 
         public async Task<IEnumerable<Book>> GetBooksByAuthorAsync(int authorId, CancellationToken cancellationToken)
         {
+            var author = await _authorRepository.GetAuthorByIdAsync(authorId, cancellationToken);
+            if (author == null)
+            {
+                throw new NotFoundException($"Автор с id \"{authorId}\" не найден");
+            }
             return await _authorRepository.GetBooksByAuthorAsync(authorId, cancellationToken);
         }
     }

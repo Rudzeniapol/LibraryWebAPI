@@ -1,11 +1,11 @@
 ﻿namespace LibraryAPI.DTOs
 {
-    public record CreateBookDTO
+    public record BookDTO
     {
         public string ISBN { get; init; } = string.Empty;
         public string Title { get; init; } = string.Empty;
         public string Genre { get; init; } = string.Empty;
         public string Description { get; init; } = string.Empty;
-        public int AuthorId { get; init; }
+        public int? AuthorId { get; init; } = null;
     }
 }

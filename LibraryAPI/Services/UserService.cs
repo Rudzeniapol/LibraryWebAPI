@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
 using LibraryAPI.DTOs;
+using LibraryAPI.Exceptions;
 using LibraryAPI.Repositories.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
@@ -26,20 +27,31 @@ namespace LibraryAPI.Services
 
         public async Task<User?> GetUserByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _userRepository.GetUserByIdAsync(id, cancellationToken);
+            var user =  await _userRepository.GetUserByIdAsync(id, cancellationToken);
+            if (user == null)
+            {
+                throw new NotFoundException($"Пользователь с id \"{id}\" не найден");
+            }
+
+            return user;
         }
         
         public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
         {
-            return await _userRepository.GetUserByUsernameAsync(username, cancellationToken);
+            var user = await _userRepository.GetUserByUsernameAsync(username, cancellationToken);
+            if (user == null)
+            {
+                throw new NotFoundException($"Пользователь с именем \"{username}\" не найден");
+            }
+            return user;
         }
 
         public async Task<User?> RegisterUserAsync(RegisterUserDTO registerUser, CancellationToken cancellationToken)
         {
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerUser.Password);
             var existingUser = await _userRepository.GetUserByUsernameAsync(registerUser.Username, cancellationToken);
             if (existingUser != null)
-                return null;
+                throw new EntityExistsException($"Пользователь с именем \"{registerUser.Username}\" уже существует");
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerUser.Password);
             var user = new User
             {
                 Username = registerUser.Username,
@@ -55,7 +67,7 @@ namespace LibraryAPI.Services
         {
             var existingUser = await _userRepository.GetUserByUsernameAsync(loginUser.Username, cancellationToken);
             if (existingUser == null || !BCrypt.Net.BCrypt.Verify(loginUser.Password, existingUser.PasswordHash))
-                return null;
+                throw new NotFoundException($"Пользователь с именем \"{loginUser.Username}\" не найден");
 
             return await GenerateJwtToken(existingUser, populateExp: true, cancellationToken);
         }
@@ -128,7 +140,7 @@ namespace LibraryAPI.Services
                 !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
                     StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new SecurityTokenException("Invalid token");
+                throw new SecurityTokenException("Некорректный токен");
             }
             
             return principal;
@@ -140,8 +152,8 @@ namespace LibraryAPI.Services
             var user = await _userRepository.GetUserByUsernameAsync(principal.Identity.Name, cancellationToken);
             if (user == null || user.RefreshToken != tokenDto.RefreshToken ||
                 user.RefreshTokenExpiryTime <= DateTime.Now)
-            {
-                throw new UnauthorizedAccessException(); // change on custom exception with token (RefreshTokenBadRequest)
+            {   
+                throw new BadRequestException("Невалидный токен либо истёк срок действия токена");
             }
             
             return await GenerateJwtToken(user, populateExp: false, cancellationToken);

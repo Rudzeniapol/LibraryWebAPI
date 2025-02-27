@@ -61,10 +61,12 @@ namespace LibraryAPI.Tests
             var newUser = new RegisterUserDTO { Username = "testUser1", Password = "testPass1", Role = "admin" };
             Assert.NotNull(await _userService.RegisterUserAsync(newUser, CancellationToken.None));
 
-            var result = await _authController.Login(new LoginUserDTO { Username = "testUser1", Password = "testPass1"}, CancellationToken.None);
+            var result =
+                await _authController.Login(new LoginUserDTO { Username = "testUser1", Password = "testPass1" },
+                    CancellationToken.None);
             var okResult = Assert.IsType<OkObjectResult>(result);
 
-            var tokenProperty = okResult.Value?.GetType().GetProperty("token");
+            var tokenProperty = okResult.Value?.GetType().GetProperty("AccessToken");
             Assert.NotNull(tokenProperty); 
             
             var token = tokenProperty.GetValue(okResult.Value) as string;

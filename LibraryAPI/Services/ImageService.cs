@@ -1,4 +1,6 @@
-﻿using LibraryAPI.Services.Interfaces;
+﻿using LibraryAPI.Exceptions;
+using LibraryAPI.Repositories.Interfaces;
+using LibraryAPI.Services.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,15 +13,23 @@ namespace LibraryAPI.Services
         private readonly IWebHostEnvironment _environment;
         private const string UploadFolder = "uploads";
         private readonly IMemoryCache _cache;
+        private readonly IBookRepository _bookRepository;
 
-        public ImageService(IWebHostEnvironment environment, IMemoryCache cache)
+        public ImageService(IWebHostEnvironment environment, IMemoryCache cache, IBookRepository bookRepository)
         {
+            _bookRepository = bookRepository;
             _environment = environment; 
             _cache = cache;
         }
 
-        public async Task<string?> UploadImageAsync(IFormFile? file, string bookTitle, CancellationToken cancellationToken)
+        public async Task<string?> UploadImageAsync(IFormFile? file, int id, CancellationToken cancellationToken)
         {
+            var book = _bookRepository.GetBookByIdAsync(id, cancellationToken);
+            if (book == null)
+            {
+                throw new NotFoundException($"Книга с id {id} не найдена");
+            }
+            var bookTitle = book.Result.Title;
             var uploadsFolder = Path.Combine(_environment.WebRootPath, UploadFolder);
             if (!Directory.Exists(uploadsFolder))
             {

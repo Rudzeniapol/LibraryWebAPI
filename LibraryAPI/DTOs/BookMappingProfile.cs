@@ -8,6 +8,6 @@ public class BookMappingProfile : Profile
 {
     public BookMappingProfile()
     {
-        CreateMap<CreateBookDTO, Book>();
+        CreateMap<BookDTO, Book>().ForAllMembers(o => o.Condition((src, dest, srcMember) => srcMember != null));
     }
 }

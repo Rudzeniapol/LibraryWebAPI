@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using LibraryAPI.DTOs;
+using LibraryAPI.Exceptions;
 using LibraryAPI.Models;
 using LibraryAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -59,8 +60,6 @@ namespace LibraryAPI.Controllers
         public async Task<ActionResult<Book>> GetBook(int id, CancellationToken cancellationToken)
         {
             var book = await _bookService.GetBookByIdAsync(id, cancellationToken);
-            if (book == null) return NotFound();
-
             var bookDTO = _mapper.Map<Book>(book);
             return Ok(bookDTO);
         }
@@ -70,7 +69,12 @@ namespace LibraryAPI.Controllers
         public async Task<ActionResult<Book>> GetBookByISBN(string isbn, CancellationToken cancellationToken)
         {
             var book = await _bookService.GetBookByISBNAsync(isbn, cancellationToken);
-            return book != null ? Ok(book) : NotFound();
+            if (book == null)
+            {
+                throw new NotFoundException($"Книга с ISBN \"{isbn}\" не найдена");
+            }
+
+            return Ok(book);
         }
 
         [Authorize(Policy = "AllUsers")]
@@ -86,41 +90,28 @@ namespace LibraryAPI.Controllers
         [HttpPost("{id}/upload-image")]
         public async Task<IActionResult> UploadImage(int id, IFormFile file, CancellationToken cancellationToken)
         {
-            var book = await _bookService.GetBookByIdAsync(id, cancellationToken);
-            if (book == null)
-                return NotFound("Книга не найдена");
-
-            var imageUrl = await _imageService.UploadImageAsync(file, book.Title, cancellationToken);
-            if (imageUrl == null)
-                return BadRequest("Ошибка загрузки изображения");
-
-            book.ImageUrl = imageUrl;
-            await _bookService.UpdateBookAsync(book, cancellationToken);
-
+            var imageUrl = await _imageService.UploadImageAsync(file, id, cancellationToken);
             return Ok(new { message = "Изображение загружено", imageUrl });
         }
         
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
-        public async Task<ActionResult<Book>> CreateBook(CreateBookDTO createBookDto, CancellationToken cancellationToken)
+        public async Task<ActionResult<Book>> CreateBook(BookDTO bookDto, int id, CancellationToken cancellationToken)
         {
-            var book = _mapper.Map<Book>(createBookDto);
-            await _bookService.AddBookAsync(book, cancellationToken);
-
-            var bookDTO = _mapper.Map<Book>(book);
-            return CreatedAtAction(nameof(GetBook), new { id = book.Id }, bookDTO);
+            await _bookService.AddBookAsync(bookDto, cancellationToken);
+            return CreatedAtAction(nameof(GetBook), new { id = id }, bookDto);
         }
 
         [Authorize(Policy = "AllUsers")]
         [HttpPost("{id}/borrow")]
-        public async Task<IActionResult> BorrowBook(int id, [FromQuery] int days)
+        public async Task<IActionResult> BorrowBook(int id, [FromQuery] int days, CancellationToken cancellationToken)
         {
             var userClaim =  User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
             if (string.IsNullOrEmpty(userClaim) || !int.TryParse(userClaim, out int userId))
             {
-                return Unauthorized("Ошибка аутентификации: не удалось определить пользователя.");
+                throw new BadRequestException("Ошибка парсинга утверждений пользователя");
             }
-            
+            await _bookService.BorrowBookAsync(id, userId, days, cancellationToken);
             return Ok("Книга успешно взята.");
         }
 
@@ -131,19 +122,17 @@ namespace LibraryAPI.Controllers
             var userReturn = User.FindFirst("sub")?.Value;
             if (string.IsNullOrEmpty(userReturn) || !int.TryParse(userReturn, out int userId))
             {
-                return Unauthorized("Ошибка аутентификации: не удалось определить пользователя.");
+                throw new BadRequestException("У пользователя нет заимствованных книг");
             }
             await _bookService.ReturnBookAsync(id, userId, cancellationToken);
-
             return Ok("Книга успешно возвращена.");
         }
         
         [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, Book book, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateBook(int id, BookDTO book, CancellationToken cancellationToken)
         {
-            if (id != book.Id) return BadRequest("ID книги не совпадает.");
-            await _bookService.UpdateBookAsync(book, cancellationToken);
+            await _bookService.UpdateBookAsync(book, id, cancellationToken);
             return NoContent();
         }
         

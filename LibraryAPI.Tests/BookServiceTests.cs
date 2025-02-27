@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using LibraryAPI.Data;
+using LibraryAPI.DTOs;
 using LibraryAPI.Models;
 using LibraryAPI.Repositories;
 using LibraryAPI.Services;
@@ -14,6 +16,7 @@ namespace LibraryAPI.Tests
     public class BookServiceTests : IDisposable
     {
         private readonly LibraryDbContext _context;
+        private readonly IMapper _mapper;
         private readonly BookService _bookService;
 
         public BookServiceTests()
@@ -22,9 +25,14 @@ namespace LibraryAPI.Tests
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<BookMappingProfile>();
+            });
+            _mapper = configuration.CreateMapper();
             _context = new LibraryDbContext(options);
             var bookRepository = new BookRepository(_context);
-            _bookService = new BookService(bookRepository, _context);
+            _bookService = new BookService(bookRepository, _mapper);
         }
 
         [Fact]
@@ -34,7 +42,7 @@ namespace LibraryAPI.Tests
             await _context.Authors.AddAsync(author);
             await _context.SaveChangesAsync();
 
-            var book = new Book 
+            var book = new BookDTO
             { 
                 Title = "1984", 
                 Genre = "Dystopia", 
@@ -84,6 +92,7 @@ namespace LibraryAPI.Tests
         {
             var book = new Book 
             { 
+                Id = 1,
                 Title = "1984", 
                 Genre = "Dystopia", 
                 ISBN = "12345", 
@@ -95,16 +104,15 @@ namespace LibraryAPI.Tests
 
             _context.Entry(book).State = EntityState.Detached;
 
-            var updatedBook = new Book 
+            var updatedBook = new BookDTO
             { 
-                Id = book.Id, 
                 Title = "1984 - Updated", 
                 Genre = "Classic", 
                 ISBN = "12345", 
                 Description = "Updated description", 
                 AuthorId = 1 
             };
-            await _bookService.UpdateBookAsync(updatedBook, CancellationToken.None);
+            await _bookService.UpdateBookAsync(updatedBook, book.Id, CancellationToken.None);
 
             var result = await _context.Books.FirstOrDefaultAsync(b => b.Id == book.Id);
             Assert.NotNull(result);

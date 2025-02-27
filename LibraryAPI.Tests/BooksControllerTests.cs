@@ -66,7 +66,7 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task CreateBook_ReturnsCreatedResponse()
         {
-            var createBookDto = new CreateBookDTO
+            var createBookDto = new BookDTO
             {
                 Title = "Brave New World",
                 ISBN = "123-4567890123",
@@ -81,8 +81,7 @@ namespace LibraryAPI.Tests
                 Title = createBookDto.Title,
                 ISBN = createBookDto.ISBN,
                 Genre = createBookDto.Genre,
-                Description = createBookDto.Description,
-                AuthorId = createBookDto.AuthorId
+                Description = createBookDto.Description
             };
 
             var bookDTO = new Book
@@ -95,17 +94,16 @@ namespace LibraryAPI.Tests
                 AuthorId = book.AuthorId
             };
             
-            _mockMapper.Setup(m => m.Map<Book>(It.IsAny<CreateBookDTO>())).Returns(book);
+            _mockMapper.Setup(m => m.Map<Book>(It.IsAny<BookDTO>())).Returns(book);
             _mockMapper.Setup(m => m.Map<Book>(It.IsAny<Book>())).Returns(bookDTO);
-            _mockService.Setup(s => s.AddBookAsync(It.IsAny<Book>(), CancellationToken.None)).Returns(Task.CompletedTask);
+            _mockService.Setup(s => s.AddBookAsync(It.IsAny<BookDTO>(), CancellationToken.None)).Returns(Task.CompletedTask);
             
-            var result = await _controller.CreateBook(createBookDto, CancellationToken.None);
+            var result = await _controller.CreateBook(createBookDto, book.Id, CancellationToken.None);
             
             var actionResult = Assert.IsType<ActionResult<Book>>(result);
             var createdAtAction = Assert.IsType<CreatedAtActionResult>(actionResult.Result);
-            var returnedBookDto = Assert.IsType<Book>(createdAtAction.Value);
-
-            Assert.Equal(bookDTO.Id, returnedBookDto.Id);
+            var returnedBookDto = Assert.IsType<BookDTO>(createdAtAction.Value);
+            
             Assert.Equal(bookDTO.Title, returnedBookDto.Title);
             Assert.Equal(bookDTO.ISBN, returnedBookDto.ISBN);
         }

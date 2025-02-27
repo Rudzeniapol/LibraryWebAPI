@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using LibraryAPI.DTOs;
+using LibraryAPI.Exceptions;
 
 namespace LibraryAPI.Controllers
 {
@@ -25,17 +26,17 @@ namespace LibraryAPI.Controllers
         {
             if (!(user.Role.ToUpper() == "ADMIN" || user.Role.ToUpper() == "USER"))
             {
-                return BadRequest("Некорректная роль.");
-            }
+                throw new BadRequestException("Невалидная роль");
+            }  
             var newUser = await _userService.RegisterUserAsync(user, cancellationToken);
-            return newUser == null ? BadRequest("Данный пользователь уже существует.") : Ok(new { message = "Пользователь зарегистрирован", userId = newUser.Id });
+            return Ok(new { message = "Пользователь зарегистрирован", userId = newUser.Id });
         }
         
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDTO user, CancellationToken cancellationToken)
         {
             var token = await _userService.LoginUserAsync(user, cancellationToken);
-            return token == null ? Unauthorized("Неверное имя пользователя или пароль.") : Ok(new {token});
+            return Ok(token);
         }
 
     }

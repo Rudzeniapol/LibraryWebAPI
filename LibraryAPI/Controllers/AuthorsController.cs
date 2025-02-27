@@ -1,4 +1,5 @@
-﻿using LibraryAPI.Models;
+﻿using LibraryAPI.Exceptions;
+using LibraryAPI.Models;
 using LibraryAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace LibraryAPI.Controllers
         public async Task<ActionResult<Author>> GetAuthor(int id, CancellationToken cancellationToken)
         {
             var author = await _authorService.GetAuthorByIdAsync(id, cancellationToken);
-            return author != null ? Ok(author) : NotFound();
+            return Ok(author);
         }
         
         [Authorize(Policy = "AdminOnly")]
@@ -45,7 +46,7 @@ namespace LibraryAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAuthor(int id, Author author, CancellationToken cancellationToken)
         {
-            if (id != author.Id) return BadRequest("ID автора не совпадает.");
+            if (id != author.Id) throw new BadRequestException($"Введённый автор и id \"{id}\" не совпадают");
             await _authorService.UpdateAuthorAsync(author, cancellationToken);
             return NoContent();
         }
