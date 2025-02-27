@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LibraryAPI.Controllers;
-using LibraryAPI.Data;
-using LibraryAPI.DTOs;
-using LibraryAPI.Models;
-using LibraryAPI.Repositories;
-using LibraryAPI.Repositories.Interfaces;
-using LibraryAPI.Services;
-using LibraryAPI.Services.Interfaces;
+using LibraryAPI.API.Controllers;
+using LibraryAPI.API.Data;
+using LibraryAPI.API.DTOs;
+using LibraryAPI.Domain.Models;
+using LibraryAPI.API.Repositories;
+using LibraryAPI.Domain.Interfaces;
+using LibraryAPI.API.Services;
+using LibraryAPI.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,7 +33,7 @@ namespace LibraryAPI.Tests
             var inMemorySettings = new Dictionary<string, string?>
             {
                 {"Jwt:Key", "super_mega_secret_key_1234567890"},
-                {"Jwt:Issuer", "LibraryAPI"},
+                {"Jwt:Issuer", "LibraryAPI.API"},
                 {"Jwt:Audience", "LibraryUsers"},
                 {"Jwt:ExpirationMinutes", "60"}
             };

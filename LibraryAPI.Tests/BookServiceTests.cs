@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using LibraryAPI.Data;
-using LibraryAPI.DTOs;
-using LibraryAPI.Models;
-using LibraryAPI.Repositories;
-using LibraryAPI.Services;
+using LibraryAPI.API.Data;
+using LibraryAPI.API.DTOs;
+using LibraryAPI.Domain.Models;
+using LibraryAPI.API.Repositories;
+using LibraryAPI.API.Services;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 

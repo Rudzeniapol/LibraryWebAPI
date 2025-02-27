@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAPI", "LibraryAPI\LibraryAPI.csproj", "{CDD976AA-20D4-4759-A948-EC5C928B1A46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAPI.API", "LibraryAPI.API\LibraryAPI.API.csproj", "{CDD976AA-20D4-4759-A948-EC5C928B1A46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAPI.Tests", "LibraryAPI.Tests\LibraryAPI.Tests.csproj", "{8CF50EB9-898B-470B-B4C9-B9A3C950FCA3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5E9EAC38-47A6-41F6-82F8-678CF95740DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAPI.Domain", "LibraryAPI.Domain\LibraryAPI.Domain.csproj", "{C9AF5D9D-7467-4F67-B83D-A9633D898307}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,5 +28,12 @@ Global
 		{8CF50EB9-898B-470B-B4C9-B9A3C950FCA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CF50EB9-898B-470B-B4C9-B9A3C950FCA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CF50EB9-898B-470B-B4C9-B9A3C950FCA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9AF5D9D-7467-4F67-B83D-A9633D898307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9AF5D9D-7467-4F67-B83D-A9633D898307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9AF5D9D-7467-4F67-B83D-A9633D898307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9AF5D9D-7467-4F67-B83D-A9633D898307}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C9AF5D9D-7467-4F67-B83D-A9633D898307} = {5E9EAC38-47A6-41F6-82F8-678CF95740DE}
 	EndGlobalSection
 EndGlobal

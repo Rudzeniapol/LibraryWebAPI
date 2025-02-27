@@ -1,6 +1,6 @@
-﻿using LibraryAPI.Data;
-using LibraryAPI.Models;
-using LibraryAPI.Repositories;
+﻿using LibraryAPI.API.Data;
+using LibraryAPI.Domain.Models;
+using LibraryAPI.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 

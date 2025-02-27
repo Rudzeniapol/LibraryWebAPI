@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using LibraryAPI.Controllers;
-using LibraryAPI.DTOs;
-using LibraryAPI.Models;
-using LibraryAPI.Services.Interfaces;
+using LibraryAPI.API.Controllers;
+using LibraryAPI.API.DTOs;
+using LibraryAPI.Domain.Models;
+using LibraryAPI.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
