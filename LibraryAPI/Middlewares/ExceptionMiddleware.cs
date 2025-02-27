@@ -48,7 +48,7 @@ namespace LibraryAPI.Middlewares
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 await context.Response.WriteAsJsonAsync(new { error = ex.Message, code = 401 });
             }
-            catch (TaskCanceledException ex)
+            catch (TaskCanceledException e)
             {
                 _logger.LogWarning("Истекло время ожидания для запроса");
                 context.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
