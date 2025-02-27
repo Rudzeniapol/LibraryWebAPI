@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using LibraryAPI.API.Controllers;
-using LibraryAPI.API.DTOs;
+using LibraryAPI.Application.DTOs;
 using LibraryAPI.Domain.Models;
-using LibraryAPI.API.Services.Interfaces;
+using LibraryAPI.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
@@ -20,15 +20,13 @@ namespace LibraryAPI.Tests
         public BooksControllerTests()
         {
             _mockService = new Mock<IBookService>();
-            _mockMapper = new Mock<IMapper>();
             _mockImageService = new Mock<IImageService>();
             _mockNotificationService = new Mock<INotificationService>();
             
             _controller = new BooksController(
                 _mockService.Object,
                 _mockImageService.Object,
-                _mockNotificationService.Object,
-                _mockMapper.Object);
+                _mockNotificationService.Object);
         }
 
         [Fact]

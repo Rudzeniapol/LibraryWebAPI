@@ -2,12 +2,12 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using LibraryAPI.API.Data;
+using LibraryAPI.Persistence.Data;
 using LibraryAPI.Domain.Models;
-using LibraryAPI.API.Repositories;
+using LibraryAPI.Persistence.Repositories;
 using LibraryAPI.Domain.Interfaces;
-using LibraryAPI.API.Services;
-using LibraryAPI.API.Services.Interfaces;
+using LibraryAPI.Application.Services;
+using LibraryAPI.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;

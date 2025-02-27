@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using LibraryAPI.API.Data;
-using LibraryAPI.API.DTOs;
+using LibraryAPI.Persistence.Data;
+using LibraryAPI.Application.DTOs;
 using LibraryAPI.Domain.Models;
-using LibraryAPI.API.Repositories;
+using LibraryAPI.Persistence.Repositories;
 using LibraryAPI.Domain.Interfaces;
-using LibraryAPI.API.Services;
+using LibraryAPI.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;

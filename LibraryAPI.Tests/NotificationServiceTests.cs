@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LibraryAPI.API.Data;
+using LibraryAPI.Persistence.Data;
 using LibraryAPI.Domain.Models;
-using LibraryAPI.API.Services;
+using LibraryAPI.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 

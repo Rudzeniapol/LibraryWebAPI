@@ -14,6 +14,7 @@ namespace LibraryAPI.Domain.Interfaces
         Task<bool> BorrowBookAsync(int bookId, int userId, int days, CancellationToken cancellationToken = default);
         Task<bool> ReturnBookAsync(int bookId, int userId, CancellationToken cancellationToken = default);
         IQueryable<Book> GetBooksQuery();
+        
 
     }
 }

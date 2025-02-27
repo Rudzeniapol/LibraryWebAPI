@@ -1,27 +1,27 @@
 {
   "Version": 1,
-  "Hash": "5y/8d9G8+SMxmPW3qvj2ZVKVfNCjN5grSKCGIw3bfDk=",
-  "Source": "LibraryAPI",
-  "BasePath": "_content/LibraryAPI",
+  "Hash": "mDLfzlMg8MW9AK7X+jYv2jHWkqX0qDfS1kCSgLglRi8=",
+  "Source": "LibraryAPI.API",
+  "BasePath": "_content/LibraryAPI.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [
     {
-      "Name": "LibraryAPI\\wwwroot",
-      "Source": "LibraryAPI",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\",
-      "BasePath": "_content/LibraryAPI",
+      "Name": "LibraryAPI.API\\wwwroot",
+      "Source": "LibraryAPI.API",
+      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "BasePath": "_content/LibraryAPI.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
-      "SourceId": "LibraryAPI",
+      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
+      "SourceId": "LibraryAPI.API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\",
-      "BasePath": "_content/LibraryAPI",
+      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "BasePath": "_content/LibraryAPI.API",
       "RelativePath": "uploads/John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
@@ -36,30 +36,11 @@
       "OriginalItemSpec": "wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg"
     },
     {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\uploads\\John_Wick_0a00528d-e723-4a49-8838-458acd33f9c6.jpg",
-      "SourceId": "LibraryAPI",
+      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg",
+      "SourceId": "LibraryAPI.API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\",
-      "BasePath": "_content/LibraryAPI",
-      "RelativePath": "uploads/John_Wick_0a00528d-e723-4a49-8838-458acd33f9c6.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\John_Wick_0a00528d-e723-4a49-8838-458acd33f9c6.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg",
-      "SourceId": "LibraryAPI",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\",
-      "BasePath": "_content/LibraryAPI",
+      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "BasePath": "_content/LibraryAPI.API",
       "RelativePath": "uploads/photo_2024-12-22_14-35-12.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
@@ -72,25 +53,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\uploads\\Some_title_b4ce9053-1c6e-4644-9e96-2afb45dc5639.png",
-      "SourceId": "LibraryAPI",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\",
-      "BasePath": "_content/LibraryAPI",
-      "RelativePath": "uploads/Some_title_b4ce9053-1c6e-4644-9e96-2afb45dc5639.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\Some_title_b4ce9053-1c6e-4644-9e96-2afb45dc5639.png"
     }
   ]
 }

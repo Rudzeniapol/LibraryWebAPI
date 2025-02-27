@@ -26,6 +26,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibraryAPI.API\LibraryAPI.API.csproj" />
+    <ProjectReference Include="..\LibraryAPI.Application\LibraryAPI.Application.csproj" />
+    <ProjectReference Include="..\LibraryAPI.Domain\LibraryAPI.Domain.csproj" />
+    <ProjectReference Include="..\LibraryAPI.Persistence\LibraryAPI.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

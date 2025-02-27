@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using FluentValidation;
-using LibraryAPI.API.Exceptions;
+using LibraryAPI.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;

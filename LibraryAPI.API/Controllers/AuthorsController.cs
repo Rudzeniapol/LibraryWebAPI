@@ -1,5 +1,5 @@
-﻿using LibraryAPI.API.Exceptions;
-using LibraryAPI.API.Services.Interfaces;
+﻿using LibraryAPI.Application.Exceptions;
+using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

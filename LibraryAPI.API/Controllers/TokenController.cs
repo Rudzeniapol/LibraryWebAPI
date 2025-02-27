@@ -1,5 +1,5 @@
-﻿using LibraryAPI.API.DTOs;
-using LibraryAPI.API.Services.Interfaces;
+﻿using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

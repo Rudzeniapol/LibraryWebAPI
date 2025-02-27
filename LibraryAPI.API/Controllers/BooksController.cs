@@ -1,8 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using AutoMapper;
-using LibraryAPI.API.DTOs;
-using LibraryAPI.API.Exceptions;
-using LibraryAPI.API.Services.Interfaces;
+using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.Exceptions;
+using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,14 +18,12 @@ namespace LibraryAPI.API.Controllers
         private readonly IBookService _bookService;
         private readonly IImageService _imageService;
         private readonly INotificationService _notificationService;
-        private readonly IMapper _mapper;
 
-        public BooksController(IBookService bookService, IImageService imageService, INotificationService notificationService, IMapper mapper)
+        public BooksController(IBookService bookService, IImageService imageService, INotificationService notificationService)
         {
             _notificationService = notificationService;
             _imageService = imageService;
             _bookService = bookService;
-            _mapper = mapper;
         }
         
         [Authorize(Policy = "AllUsers")]
@@ -38,21 +35,8 @@ namespace LibraryAPI.API.Controllers
             [FromQuery] string? genre = null,
             [FromQuery] string? title = null)
         {
-            var booksQuery = _bookService.GetBooksQuery();
-
-            if (!string.IsNullOrEmpty(genre))
-                booksQuery = booksQuery.Where(b => b.Genre.Contains(genre));
-
-            if (!string.IsNullOrEmpty(title))
-                booksQuery = booksQuery.Where(b => b.Title.Contains(title));
-
-            var books = await booksQuery
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync(cancellationToken);
-
-            var booksDTO = _mapper.Map<IEnumerable<Book>>(books);
-            return Ok(booksDTO);
+            var booksQuery = await _bookService.GetBooksQueryAsync(page, pageSize, genre, title, cancellationToken);
+            return Ok(booksQuery);
         }
 
         [Authorize(Policy = "AllUsers")]
@@ -60,8 +44,7 @@ namespace LibraryAPI.API.Controllers
         public async Task<ActionResult<Book>> GetBook(int id, CancellationToken cancellationToken)
         {
             var book = await _bookService.GetBookByIdAsync(id, cancellationToken);
-            var bookDTO = _mapper.Map<Book>(book);
-            return Ok(bookDTO);
+            return Ok(book);
         }
         
         [Authorize(Policy = "AllUsers")]

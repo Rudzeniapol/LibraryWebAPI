@@ -1,9 +1,9 @@
 ﻿using System.Text;
-using LibraryAPI.API.Data;
-using LibraryAPI.API.DTOs;
-using LibraryAPI.API.Repositories;
-using LibraryAPI.API.Services;
-using LibraryAPI.API.Services.Interfaces;
+using LibraryAPI.Persistence.Data;
+using LibraryAPI.Application.DTOs;
+using LibraryAPI.Persistence.Repositories;
+using LibraryAPI.Application.Services;
+using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;

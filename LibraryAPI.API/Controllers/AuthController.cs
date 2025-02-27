@@ -4,9 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using LibraryAPI.API.DTOs;
-using LibraryAPI.API.Exceptions;
-using LibraryAPI.API.Services.Interfaces;
+using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.Exceptions;
+using LibraryAPI.Application.Services.Interfaces;
 
 namespace LibraryAPI.API.Controllers
 {
