@@ -88,13 +88,13 @@ namespace LibraryAPI.Services
         public async Task ReturnBookAsync(int bookId, int userId, CancellationToken cancellationToken)
         {
             var book = await _bookRepository.GetBookByIdAsync(bookId, cancellationToken);
-            if (book.UserId != userId || book.BorrowedAt == null)
-            {
-                throw new BadRequestException("Невалидная информация о возвращаемой книге");
-            }
             if (book == null)
             {
                 throw new NotFoundException($"Книга с id \"{bookId}\" не найдена");
+            }
+            if (book.UserId != userId || book.BorrowedAt == null)
+            {
+                throw new BadRequestException("Невалидная информация о возвращаемой книге");
             }
             await _bookRepository.ReturnBookAsync(bookId, userId, cancellationToken);
         }

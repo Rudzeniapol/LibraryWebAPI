@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "PHPd1q7DuT5YFvHE08gIjZzSjZGWjpM7Sv1UlyMxCj4=",
+  "Hash": "5y/8d9G8+SMxmPW3qvj2ZVKVfNCjN5grSKCGIw3bfDk=",
   "Source": "LibraryAPI",
   "BasePath": "_content/LibraryAPI",
   "Mode": "Default",
@@ -72,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\uploads\\Some_title_b4ce9053-1c6e-4644-9e96-2afb45dc5639.png",
+      "SourceId": "LibraryAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryAPI\\wwwroot\\",
+      "BasePath": "_content/LibraryAPI",
+      "RelativePath": "uploads/Some_title_b4ce9053-1c6e-4644-9e96-2afb45dc5639.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\Some_title_b4ce9053-1c6e-4644-9e96-2afb45dc5639.png"
     }
   ]
 }
