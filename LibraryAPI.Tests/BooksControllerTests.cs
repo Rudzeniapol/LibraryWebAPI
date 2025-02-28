@@ -12,7 +12,6 @@ namespace LibraryAPI.Tests
     public class BooksControllerTests
     {
         private readonly Mock<IBookService> _mockService;
-        private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IImageService> _mockImageService;
         private readonly Mock<INotificationService> _mockNotificationService;
         private readonly BooksController _controller;
@@ -52,13 +51,18 @@ namespace LibraryAPI.Tests
             };
 
             _mockService.Setup(s => s.GetBookByIdAsync(1, CancellationToken.None)).ReturnsAsync(book);
-            _mockMapper.Setup(m => m.Map<Book>(It.IsAny<Book>())).Returns(bookDTO);
             
             var result = await _controller.GetBook(1, CancellationToken.None);
             
             var actionResult = Assert.IsType<ActionResult<Book>>(result);
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-            Assert.Equal(bookDTO, okResult.Value);
+            var returnedBook = Assert.IsType<Book>(okResult.Value);
+            Assert.Equal(bookDTO.Id, returnedBook.Id);
+            Assert.Equal(bookDTO.Title, returnedBook.Title);
+            Assert.Equal(bookDTO.Genre, returnedBook.Genre);
+            Assert.Equal(bookDTO.ISBN, returnedBook.ISBN);
+            Assert.Equal(bookDTO.Description, returnedBook.Description);
+            Assert.Equal(bookDTO.AuthorId, returnedBook.AuthorId);
         }
 
         [Fact]
@@ -92,8 +96,6 @@ namespace LibraryAPI.Tests
                 AuthorId = book.AuthorId
             };
             
-            _mockMapper.Setup(m => m.Map<Book>(It.IsAny<BookDTO>())).Returns(book);
-            _mockMapper.Setup(m => m.Map<Book>(It.IsAny<Book>())).Returns(bookDTO);
             _mockService.Setup(s => s.AddBookAsync(It.IsAny<BookDTO>(), CancellationToken.None)).Returns(Task.CompletedTask);
             
             var result = await _controller.CreateBook(createBookDto, book.Id, CancellationToken.None);

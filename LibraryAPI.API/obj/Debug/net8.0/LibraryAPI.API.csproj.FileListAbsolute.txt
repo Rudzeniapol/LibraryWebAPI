@@ -12,7 +12,7 @@ C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Azure.Identity.dll
-C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\BCrypt.Net.dll
+C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\FluentValidation.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
@@ -44,15 +44,11 @@ C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
-C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
-C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
-C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Debug.dll
-C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.API\bin\Debug\net8.0\Microsoft.Identity.Client.dll

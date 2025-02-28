@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Hosting;
 using Moq;
 using Xunit;
 
@@ -29,13 +30,16 @@ namespace LibraryAPI.Tests
             var options = new DbContextOptionsBuilder<LibraryDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            _testWebRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot_test");
+
+            _testWebRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
             if (!Directory.Exists(_testWebRoot))
             {
                 Directory.CreateDirectory(_testWebRoot);
             }
+
             var context = new LibraryDbContext(options);
             _bookRepository = new BookRepository(context);
+
             var envMock = new Mock<IWebHostEnvironment>();
             envMock.Setup(m => m.WebRootPath).Returns(_testWebRoot);
 
@@ -55,16 +59,24 @@ namespace LibraryAPI.Tests
                 Headers = new HeaderDictionary(),
                 ContentType = "image/jpeg"
             };
+
             var book = new Book
             {
                 Id = 1,
                 Title = "SomeTitle"
             };
-            _bookRepository.AddBookAsync(book);
+            await _bookRepository.AddBookAsync(book); 
             
+            var uploadsFolder = Path.Combine(_testWebRoot, "uploads");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
             var url = await _imageService.UploadImageAsync(formFile, 1, CancellationToken.None);
 
             Assert.False(string.IsNullOrEmpty(url));
+            
             string filePath = Path.Combine(_testWebRoot, url.TrimStart('/'));
             Assert.True(File.Exists(filePath));
         }

@@ -3,18 +3,19 @@ using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace LibraryAPI.Application.Services
 {
     public class ImageService : IImageService
     {
-        private readonly IHostEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
         private const string UploadFolder = "uploads";
         private readonly IMemoryCache _cache;
         private readonly IBookRepository _bookRepository;
 
-        public ImageService(IHostEnvironment environment, IMemoryCache cache, IBookRepository bookRepository)
+        public ImageService(IWebHostEnvironment environment, IMemoryCache cache, IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
             _environment = environment; 
@@ -23,13 +24,14 @@ namespace LibraryAPI.Application.Services
 
         public async Task<string?> UploadImageAsync(IFormFile? file, int id, CancellationToken cancellationToken)
         {
-            var book = _bookRepository.GetBookByIdAsync(id, cancellationToken);
+            var book = await _bookRepository.GetBookByIdAsync(id, cancellationToken);
             if (book == null)
             {
                 throw new NotFoundException($"Книга с id {id} не найдена");
             }
-            var bookTitle = book.Result.Title;
-            var uploadsFolder = Path.Combine(_environment.ContentRootPath, UploadFolder);
+        
+            var bookTitle = book.Title;
+            var uploadsFolder = Path.Combine(_environment.WebRootPath, UploadFolder);
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
@@ -38,16 +40,16 @@ namespace LibraryAPI.Application.Services
             var fileName = $"{bookTitle.Replace(" ", "_")}_{Guid.NewGuid()}{Path.GetExtension(file?.FileName)}";
             var filePath = Path.Combine(uploadsFolder, fileName);
 
-            await using(var fileStream = new FileStream(filePath, FileMode.Create))
+            await using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream, cancellationToken);
             }
-            
+
             _cache.Set(fileName, filePath, TimeSpan.FromHours(1));
 
             return $"/{UploadFolder}/{fileName}";
         }
-        
+    
         public Task<byte[]> GetCachedImageAsync(string fileName)
         {
             if (_cache.TryGetValue(fileName, out string? filePath) && File.Exists(filePath))
@@ -57,4 +59,5 @@ namespace LibraryAPI.Application.Services
             return Task.FromResult<byte[]>(null);
         }
     }
+
 }
