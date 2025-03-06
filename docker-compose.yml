@@ -11,7 +11,7 @@ services:
       - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=LibraryData;User Id=sa;Password=Passw0rd;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=LibraryDataBase;User Id=sa;Password=Passw0rd;TrustServerCertificate=True;
     depends_on:
       - db
 

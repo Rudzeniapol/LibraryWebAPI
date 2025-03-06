@@ -20,6 +20,7 @@ builder.Services.ConfigureAuthentication(builder.Configuration);
 builder.Services.ConfigureAuthorization();
 builder.Services.ConfigureDependencyInjection();
 builder.Services.ConfigureAutoMapper();
+builder.Services.ConfigureValidation();
 
 builder.Services.AddMemoryCache();
 builder.Services.AddAuthorization(); 
