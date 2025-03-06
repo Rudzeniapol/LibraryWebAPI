@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryAPI.Application.Queries.Notification;
 using LibraryAPI.Persistence.Data;
 using LibraryAPI.Domain.Models;
 using LibraryAPI.Application.Services;
+using LibraryAPI.Domain.Interfaces;
+using LibraryAPI.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
@@ -13,7 +16,7 @@ namespace LibraryAPI.Tests
     public class NotificationServiceTests : IDisposable
     {
         private readonly LibraryDbContext _context;
-        private readonly NotificationService _notificationService;
+        private readonly IBookRepository _bookRepository;
 
         public NotificationServiceTests()
         {
@@ -21,7 +24,7 @@ namespace LibraryAPI.Tests
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             _context = new LibraryDbContext(options);
-            _notificationService = new NotificationService(_context);
+            _bookRepository = new BookRepository(_context);
         }
 
         [Fact]
@@ -48,7 +51,11 @@ namespace LibraryAPI.Tests
             await _context.Books.AddRangeAsync(overdueBook, notOverdueBook);
             await _context.SaveChangesAsync();
 
-            var notifications = await _notificationService.GetOverdueBooksAsync(CancellationToken.None);
+            var handler = new GetOverdueBooksQueryHandler(_bookRepository);
+            
+            GetOverdueBooksQuery query = new GetOverdueBooksQuery();
+            
+            var notifications = await handler.Handle(query, CancellationToken.None);
 
             Assert.Single(notifications);
             Assert.Contains("Overdue Book", notifications.First());

@@ -2,13 +2,8 @@
 
 namespace LibraryAPI.Domain.Interfaces
 {
-    public interface IAuthorRepository
+    public interface IAuthorRepository : IRepository<Author>
     {
-        Task<IEnumerable<Author>> GetAllAuthorsAsync(CancellationToken cancellationToken = default);
-        Task<Author?> GetAuthorByIdAsync(int id, CancellationToken cancellationToken = default);
-        Task AddAuthorAsync(Author author, CancellationToken cancellationToken = default);
-        Task UpdateAuthorAsync(Author author, CancellationToken cancellationToken = default);
-        Task DeleteAuthorAsync(int id, CancellationToken cancellationToken = default);
         Task<IEnumerable<Book>> GetBooksByAuthorAsync(int authorId, CancellationToken cancellationToken = default);
         Task<bool> AuthorExistsAsync(int id, CancellationToken cancellationToken = default);
     }

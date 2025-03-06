@@ -1,5 +1,7 @@
-﻿using LibraryAPI.Application.DTOs;
+﻿using LibraryAPI.Application.Commands.Token;
+using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,17 +11,17 @@ namespace LibraryAPI.API.Controllers;
 [ApiController]
 public class TokenController : ControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly IMediator _mediator;
 
-    public TokenController(IUserService userService)
+    public TokenController(IMediator mediator)
     {
-        _userService = userService;
+        _mediator = mediator;
     }
     
     [HttpPost("refresh")]
-    public async Task<IActionResult> Refresh([FromBody] TokenDto tokenDto)
+    public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand command)
     {
-        var result = await _userService.RefreshToken(tokenDto);
+        var result = await _mediator.Send(command);
         return Ok(result);
     }
 }

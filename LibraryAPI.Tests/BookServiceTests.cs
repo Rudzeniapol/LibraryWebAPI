@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using LibraryAPI.Application.Commands.Book;
 using LibraryAPI.Persistence.Data;
 using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.Queries.Book;
 using LibraryAPI.Domain.Models;
 using LibraryAPI.Persistence.Repositories;
 using LibraryAPI.Application.Services;
+using LibraryAPI.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
@@ -17,7 +20,7 @@ namespace LibraryAPI.Tests
     {
         private readonly LibraryDbContext _context;
         private readonly IMapper _mapper;
-        private readonly BookService _bookService;
+        private readonly IBookRepository _bookRepository;
 
         public BookServiceTests()
         {
@@ -31,8 +34,8 @@ namespace LibraryAPI.Tests
             });
             _mapper = configuration.CreateMapper();
             _context = new LibraryDbContext(options);
-            var bookRepository = new BookRepository(_context);
-            _bookService = new BookService(bookRepository, _mapper);
+            _bookRepository = new BookRepository(_context);
+            var userRepository = new UserRepository(_context);
         }
 
         [Fact]
@@ -51,7 +54,13 @@ namespace LibraryAPI.Tests
                 AuthorId = author.Id 
             };
 
-            await _bookService.AddBookAsync(book, CancellationToken.None);
+            var handler = new AddBookCommandHandler(_bookRepository, _mapper);
+
+            AddBookCommand command = new AddBookCommand();
+            
+            command.Book = book;
+            
+            await handler.Handle(command, CancellationToken.None);
 
             var result = await _context.Books.FirstOrDefaultAsync(b => b.Title == "1984");
             Assert.NotNull(result);
@@ -69,7 +78,11 @@ namespace LibraryAPI.Tests
             });
             await _context.SaveChangesAsync();
 
-            var books = await _bookService.GetAllBooksAsync(CancellationToken.None);
+            var handler = new GetAllBooksQueryHandler(_bookRepository);
+            
+            GetAllBooksQuery query = new GetAllBooksQuery();
+            
+            var books = await handler.Handle(query, CancellationToken.None);
 
             Assert.Equal(2, books.Count());
         }
@@ -81,7 +94,11 @@ namespace LibraryAPI.Tests
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
 
-            var result = await _bookService.GetBookByIdAsync(1, CancellationToken.None);
+            var handler = new GetBookByIdQueryHandler(_bookRepository);
+            
+            GetBookByIdQuery query = new GetBookByIdQuery { Id = book.Id };
+            
+            var result = await handler.Handle(query, CancellationToken.None);
 
             Assert.NotNull(result);
             Assert.Equal("1984", result.Title);
@@ -112,7 +129,13 @@ namespace LibraryAPI.Tests
                 Description = "Updated description", 
                 AuthorId = 1 
             };
-            await _bookService.UpdateBookAsync(updatedBook, book.Id, CancellationToken.None);
+
+            var handler = new UpdateBookCommandHandler(_bookRepository, _mapper);
+            
+            UpdateBookCommand command = new UpdateBookCommand();
+            command.Book = updatedBook;
+            command.Id = book.Id;
+            await handler.Handle(command, CancellationToken.None);
 
             var result = await _context.Books.FirstOrDefaultAsync(b => b.Id == book.Id);
             Assert.NotNull(result);
@@ -127,7 +150,12 @@ namespace LibraryAPI.Tests
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
 
-            await _bookService.DeleteBookAsync(1, CancellationToken.None);
+            var handler = new DeleteBookCommandHandler(_bookRepository);
+            
+            DeleteBookCommand command = new DeleteBookCommand();
+            command.bookId = book.Id;           
+            
+            await handler.Handle(command, CancellationToken.None);
             var result = await _context.Books.FirstOrDefaultAsync(b => b.Id == 1);
 
             Assert.Null(result);

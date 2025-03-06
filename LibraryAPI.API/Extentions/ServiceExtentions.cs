@@ -1,10 +1,25 @@
 ﻿using System.Text;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using LibraryAPI.API.Validators;
+using LibraryAPI.Application.Commands.Author;
+using LibraryAPI.Application.Commands.Book;
+using LibraryAPI.Application.Commands.Token;
+using LibraryAPI.Application.Commands.User;
 using LibraryAPI.Persistence.Data;
 using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.Queries.Author;
+using LibraryAPI.Application.Queries.Book;
+using LibraryAPI.Application.Queries.Notification;
+using LibraryAPI.Application.Queries.User;
 using LibraryAPI.Persistence.Repositories;
 using LibraryAPI.Application.Services;
 using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
+using LibraryAPI.Domain.Models;
+using LibraryAPI.Persistence.Services;
+using LibraryAPI.Persistence.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -36,6 +51,13 @@ public static class ServiceExtentions
         return services;
     }
 
+    public static IServiceCollection ConfigureValidation(this IServiceCollection services)
+    {
+        services.AddValidatorsFromAssemblyContaining<RegisterUserCommandValidator>(); // Автоматическая регистрация валидаторов
+        services.AddFluentValidationAutoValidation();
+        return services;
+    }
+    
     public static IServiceCollection ConfigureDatabaseContext(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -79,14 +101,47 @@ public static class ServiceExtentions
 
     public static IServiceCollection ConfigureDependencyInjection(this IServiceCollection services)
     {
+        services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IAuthorRepository, AuthorRepository>();
-        services.AddScoped<IBookService, BookService>();
-        services.AddScoped<IAuthorService, AuthorService>();
-        services.AddScoped<IImageService, ImageService>();
-        services.AddScoped<INotificationService, NotificationService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IPasswordService, PasswordService>();
+        services.AddScoped<IImageService>(provider => 
+            new ImageService(Path.Combine(provider.GetRequiredService<IWebHostEnvironment>().WebRootPath, "uploads")));
+        
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+        
+        services.AddScoped<IRequestHandler<AddBookCommand>, AddBookCommandHandler>();
+        services.AddScoped<IRequestHandler<BorrowBookCommand>, BorrowBookCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteBookCommand>, DeleteBookCommandHandler>();
+        services.AddScoped<IRequestHandler<ReturnBookCommand>, ReturnBookCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateBookCommand>, UpdateBookCommandHandler>();
+        services.AddScoped<IRequestHandler<UploadBookImageCommand, string>, UploadBookImageCommandHandler>();
+        
+        services.AddScoped<IRequestHandler<AddAuthorCommand>, AddAuthorCommandHandler>();
+        services.AddScoped<IRequestHandler<DeleteAuthorCommand>, DeleteAuthorCommandHandler>();
+        services.AddScoped<IRequestHandler<UpdateAuthorCommand>, UpdateAuthorCommandHandler>();
+        
+        services.AddScoped<IRequestHandler<LoginUserCommand, TokenDto>, LoginUserCommandHandler>();
+        services.AddScoped<IRequestHandler<RegisterUserCommand, User>, RegisterUserCommandHandler>();
+        
+        services.AddScoped<IRequestHandler<RefreshTokenCommand, TokenDto>, RefreshTokenCommandHandler>();
+        
+        services.AddScoped<IRequestHandler<GetAuthorByIdQuery, Author>, GetAuthorByIdQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAuthorsQuery, IEnumerable<Author>>, GetAuthorsQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAuthorByIdQuery, Author>, GetAuthorByIdQueryHandler>();
+        
+        services.AddScoped<IRequestHandler<GetAllBooksQuery, IEnumerable<Book>>, GetAllBooksQueryHandler>();
+        services.AddScoped<IRequestHandler<GetBookByIdQuery, Book>, GetBookByIdQueryHandler>();
+        services.AddScoped<IRequestHandler<GetBookByISBNQuery, Book>, GetBookByISBNQueryHandler>();
+        services.AddScoped<IRequestHandler<GetBookImageQuery, Stream>, GetBookImageQueryHandler>();
+        services.AddScoped<IRequestHandler<GetBooksQuery, IEnumerable<Book>>, GetBooksQueryHandler>();
+        
+        services.AddScoped<IRequestHandler<GetOverdueBooksQuery, List<string>>, GetOverdueBooksQueryHandler>();
+        
+        services.AddScoped<IRequestHandler<GetUserByIdQuery, User>, GetUserByIdQueryHandler>();
+        services.AddScoped<IRequestHandler<GetUserByUsernameQuery, User>, GetUserByUsernameQueryHandler>();
         
         return services;
     }

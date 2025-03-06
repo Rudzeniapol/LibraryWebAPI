@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
+using LibraryAPI.Application.Commands.User;
 using LibraryAPI.Persistence.Data;
 using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.Queries.User;
 using LibraryAPI.Domain.Models;
 using LibraryAPI.Persistence.Repositories;
 using LibraryAPI.Domain.Interfaces;
 using LibraryAPI.Application.Services;
+using LibraryAPI.Application.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -18,16 +21,16 @@ namespace LibraryAPI.Tests
     public class UserServiceTests
     {
         private readonly IUserRepository _context;
-        private readonly UserService _userService;
+        private readonly IPasswordService _passwordService;
 
         public UserServiceTests()
         {
+            _passwordService = new PasswordService();
             var options = new DbContextOptionsBuilder<LibraryDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             _context = new UserRepository(new LibraryDbContext(options));
             Mock<IConfiguration> configuration = new Mock<IConfiguration>();
-            _userService = new UserService(_context, configuration.Object);
         }
 
         [Fact]
@@ -35,7 +38,13 @@ namespace LibraryAPI.Tests
         {
             RegisterUserDTO user = new RegisterUserDTO() {Username = "username", Password = "password", Role = "admin"};
 
-            var newUser = await _userService.RegisterUserAsync(user, CancellationToken.None);
+            var handler = new RegisterUserCommandHandler(_context, _passwordService);
+
+            RegisterUserCommand command = new RegisterUserCommand();
+            
+            command.RegisterUser = user;
+            
+            var newUser = await handler.Handle(command, CancellationToken.None);
             var userFromDb = await _context.GetUserByUsernameAsync(user.Username);
 
             Assert.NotNull(userFromDb);
@@ -46,9 +55,13 @@ namespace LibraryAPI.Tests
         public async Task GetUserByUsernameAsync_ReturnsCorrectUser()
         {
             var user = new User { Username = "testUser", PasswordHash = BCrypt.Net.BCrypt.HashPassword("testPass"), Role = "admin" };
-            await _context.AddUserAsync(user);
+            await _context.AddAsync(user);
 
-            var foundUser = await _userService.GetUserByUsernameAsync("testUser");
+            var handler = new GetUserByUsernameQueryHandler(_context);
+            
+            GetUserByUsernameQuery query = new GetUserByUsernameQuery();
+            query.Username = user.Username;
+            var foundUser = await handler.Handle(query, CancellationToken.None);
 
             Assert.NotNull(foundUser);
             Assert.Equal("admin", foundUser.Role);

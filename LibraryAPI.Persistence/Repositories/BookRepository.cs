@@ -5,87 +5,61 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryAPI.Persistence.Repositories
 {
-    public class BookRepository : IBookRepository
+    public class BookRepository : BaseRepository<Book>, IBookRepository
     {
-        private readonly LibraryDbContext _context;
-
-        public BookRepository(LibraryDbContext context)
+        public BookRepository(LibraryDbContext context) : base(context)
         {
-            _context = context;
-        }
-
-        public async Task<IEnumerable<Book>> GetAllBooksAsync(CancellationToken cancellationToken = default)
-        {
-            return await _context.Books.ToListAsync(cancellationToken);
-        }
-
-        public async Task<Book?> GetBookByIdAsync(int id, CancellationToken cancellationToken = default)
-        {
-            return await _context.Books.FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
         }
 
         public async Task<Book?> GetBookByISBNAsync(string isbn, CancellationToken cancellationToken = default)
         {
-            return await _context.Books.FirstOrDefaultAsync(b => b.ISBN == isbn, cancellationToken); 
-        }
-
-
-        public async Task AddBookAsync(Book book, CancellationToken cancellationToken = default)
-        {
-            await _context.Books.AddAsync(book, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
-        }
-
-        public async Task UpdateBookAsync(Book book, CancellationToken cancellationToken = default)
-        {
-            _context.Books.Update(book);
-            await _context.SaveChangesAsync(cancellationToken);
-        }
-
-        public async Task DeleteBookAsync(int id, CancellationToken cancellationToken = default)
-        {
-            var book = await _context.Books.FindAsync(id, cancellationToken);
-            if (book != null)
-            {
-                _context.Books.Remove(book);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
+            return await _dbSet.FirstOrDefaultAsync(b => b.ISBN == isbn, cancellationToken); 
         }
 
         public async Task<bool> BookExistsAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _context.Books.AnyAsync(b => b.Id == id, cancellationToken);
+            return await _dbSet.AnyAsync(b => b.Id == id, cancellationToken);
         }
-
-
-        public async Task<bool> BorrowBookAsync(int bookId, int userId, int days, CancellationToken cancellationToken = default)
+        
+        public async Task BorrowBookAsync(Book book, int userId, int days, CancellationToken cancellationToken = default)
         {
-            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == bookId, cancellationToken);
-            if (book == null || book.UserId != null) return false;
             book.UserId = userId;
             book.BorrowedAt = DateTime.UtcNow;
             book.ReturnBy = DateTime.UtcNow.AddDays(days);
-
+            _dbSet.Update(book);
             await _context.SaveChangesAsync(cancellationToken);
-            return true;
         }
         
-        public IQueryable<Book> GetBooksQuery()
+        public async Task ReturnBookAsync(Book book, CancellationToken cancellationToken = default)
         {
-            return _context.Books.AsQueryable();
-        }
-        
-        public async Task<bool> ReturnBookAsync(int bookId, int userId, CancellationToken cancellationToken = default)
-        {
-            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == bookId, cancellationToken);
-            if (book == null || book.UserId != userId) return false;
-
             book.UserId = null;
             book.BorrowedAt = null;
             book.ReturnBy = null;
-
+            _dbSet.Update(book);
             await _context.SaveChangesAsync(cancellationToken);
-            return true;
+        }
+
+        public async Task<IEnumerable<Book>> GetBooksQuery(int pageNumber, int pageSize, string? genre, string? title, CancellationToken cancellationToken = default)
+        {
+            var booksQuery = _dbSet.AsQueryable();
+            if (!string.IsNullOrEmpty(genre))
+                booksQuery = booksQuery.Where(b => b.Genre.Contains(genre));
+
+            if (!string.IsNullOrEmpty(title))
+                booksQuery = booksQuery.Where(b => b.Title.Contains(title));
+            
+            return await booksQuery
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<List<string>> GetOverdueBooks(CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .Where(b => b.ReturnBy < DateTime.UtcNow && b.UserId != null)
+                .Select(b => $"Книга '{b.Title}' просрочена! Верните её как можно скорее.")
+                .ToListAsync(cancellationToken);
         }
     }
 }

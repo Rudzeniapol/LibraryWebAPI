@@ -2,19 +2,16 @@
 
 namespace LibraryAPI.Domain.Interfaces
 {
-    public interface IBookRepository
+    public interface IBookRepository : IRepository<Book>
     {
-        Task<IEnumerable<Book>> GetAllBooksAsync(CancellationToken cancellationToken = default);
-        Task<Book?> GetBookByIdAsync(int id, CancellationToken cancellationToken = default);
         Task<Book?> GetBookByISBNAsync(string isbn, CancellationToken cancellationToken = default);
-        Task AddBookAsync(Book book, CancellationToken cancellationToken = default);
-        Task UpdateBookAsync(Book book, CancellationToken cancellationToken = default);
-        Task DeleteBookAsync(int id, CancellationToken cancellationToken = default);
         Task<bool> BookExistsAsync(int id, CancellationToken cancellationToken = default);
-        Task<bool> BorrowBookAsync(int bookId, int userId, int days, CancellationToken cancellationToken = default);
-        Task<bool> ReturnBookAsync(int bookId, int userId, CancellationToken cancellationToken = default);
-        IQueryable<Book> GetBooksQuery();
-        
+        Task BorrowBookAsync(Book book, int userId, int days, CancellationToken cancellationToken = default);
+        Task ReturnBookAsync(Book book, CancellationToken cancellationToken = default);
 
+        Task<IEnumerable<Book>> GetBooksQuery(int pageNumber, int pageSize, string? genre, string? title,
+            CancellationToken cancellationToken = default);
+
+        Task<List<string>> GetOverdueBooks(CancellationToken cancellationToken = default);
     }
 }

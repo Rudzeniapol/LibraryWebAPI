@@ -4,9 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using LibraryAPI.Application.Commands.User;
 using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
 using LibraryAPI.Application.Services.Interfaces;
+using MediatR;
 
 namespace LibraryAPI.API.Controllers
 {
@@ -14,28 +16,24 @@ namespace LibraryAPI.API.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private IMediator _mediator;
         
-        public AuthController(IUserService userService)
+        public AuthController(IMediator mediator)
         {
-            _userService = userService;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserDTO user, CancellationToken cancellationToken)
+        public async Task<IActionResult> Register([FromBody] RegisterUserCommand command, CancellationToken cancellationToken)
         {
-            if (!(user.Role.ToUpper() == "ADMIN" || user.Role.ToUpper() == "USER"))
-            {
-                throw new BadRequestException("Невалидная роль");
-            }  
-            var newUser = await _userService.RegisterUserAsync(user, cancellationToken);
+            var newUser = await _mediator.Send(command, cancellationToken);
             return Ok(new { message = "Пользователь зарегистрирован", userId = newUser.Id });
         }
         
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserDTO user, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromBody] LoginUserCommand command, CancellationToken cancellationToken)
         {
-            var token = await _userService.LoginUserAsync(user, cancellationToken);
+            var token = await _mediator.Send(command, cancellationToken);
             return Ok(token);
         }
 

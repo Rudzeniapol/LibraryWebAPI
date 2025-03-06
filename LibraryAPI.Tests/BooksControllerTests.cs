@@ -1,111 +1,78 @@
-﻿using AutoMapper;
-using LibraryAPI.API.Controllers;
+﻿using LibraryAPI.API.Controllers;
+using LibraryAPI.Application.Commands.Book;
 using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.Queries.Book;
 using LibraryAPI.Domain.Models;
-using LibraryAPI.Application.Services.Interfaces;
+using LibraryAPI.Persistence.Services.Interfaces;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LibraryAPI.Tests
 {
     public class BooksControllerTests
     {
-        private readonly Mock<IBookService> _mockService;
-        private readonly Mock<IImageService> _mockImageService;
-        private readonly Mock<INotificationService> _mockNotificationService;
+        private readonly Mock<IMediator> _mediatorMock = new();
+        private readonly Mock<IImageService> _imageServiceMock = new();
         private readonly BooksController _controller;
 
         public BooksControllerTests()
         {
-            _mockService = new Mock<IBookService>();
-            _mockImageService = new Mock<IImageService>();
-            _mockNotificationService = new Mock<INotificationService>();
-            
-            _controller = new BooksController(
-                _mockService.Object,
-                _mockImageService.Object,
-                _mockNotificationService.Object);
+            _controller = new BooksController(_imageServiceMock.Object, _mediatorMock.Object);
         }
 
         [Fact]
-        public async Task GetBook_ReturnsBook_WhenExists()
+        public async Task GetBook_ReturnsOk_WhenBookExists()
         {
-            var book = new Book 
-            { 
-                Id = 1, 
-                Title = "1984", 
-                Genre = "Dystopia", 
-                ISBN = "123", 
-                Description = "desc", 
-                AuthorId = 1 
-            };
-            var bookDTO = new Book 
-            { 
-                Id = 1, 
-                Title = "1984", 
-                Genre = "Dystopia", 
-                ISBN = "123", 
-                Description = "desc", 
-                AuthorId = 1 
-            };
+            var book = new Book { Id = 1, Title = "1984" };
+            _mediatorMock.Setup(m => m.Send(It.Is<GetBookByIdQuery>(q => q.Id == 1), It.IsAny<CancellationToken>()))
+                        .ReturnsAsync(book);
 
-            _mockService.Setup(s => s.GetBookByIdAsync(1, CancellationToken.None)).ReturnsAsync(book);
-            
             var result = await _controller.GetBook(1, CancellationToken.None);
-            
             var actionResult = Assert.IsType<ActionResult<Book>>(result);
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-            var returnedBook = Assert.IsType<Book>(okResult.Value);
-            Assert.Equal(bookDTO.Id, returnedBook.Id);
-            Assert.Equal(bookDTO.Title, returnedBook.Title);
-            Assert.Equal(bookDTO.Genre, returnedBook.Genre);
-            Assert.Equal(bookDTO.ISBN, returnedBook.ISBN);
-            Assert.Equal(bookDTO.Description, returnedBook.Description);
-            Assert.Equal(bookDTO.AuthorId, returnedBook.AuthorId);
+            Assert.Equal(book, okResult.Value);
         }
 
         [Fact]
-        public async Task CreateBook_ReturnsCreatedResponse()
+        public async Task CreateBook_ReturnsCreatedAtAction_WithValidData()
         {
-            var createBookDto = new BookDTO
-            {
-                Title = "Brave New World",
-                ISBN = "123-4567890123",
-                Genre = "Dystopian",
-                Description = "A novel by Aldous Huxley",
-                AuthorId = 1
-            };
+            var command = new AddBookCommand { Book = new BookDTO() };
+            _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
+                         .Returns(Task.FromResult(Unit.Value)); // Исправлено
 
-            var book = new Book
-            {
-                Id = 1,
-                Title = createBookDto.Title,
-                ISBN = createBookDto.ISBN,
-                Genre = createBookDto.Genre,
-                Description = createBookDto.Description
-            };
-
-            var bookDTO = new Book
-            {
-                Id = book.Id,
-                Title = book.Title,
-                ISBN = book.ISBN,
-                Genre = book.Genre,
-                Description = book.Description,
-                AuthorId = book.AuthorId
-            };
-            
-            _mockService.Setup(s => s.AddBookAsync(It.IsAny<BookDTO>(), CancellationToken.None)).Returns(Task.CompletedTask);
-            
-            var result = await _controller.CreateBook(createBookDto, book.Id, CancellationToken.None);
-            
-            var actionResult = Assert.IsType<ActionResult<Book>>(result);
-            var createdAtAction = Assert.IsType<CreatedAtActionResult>(actionResult.Result);
-            var returnedBookDto = Assert.IsType<BookDTO>(createdAtAction.Value);
-            
-            Assert.Equal(bookDTO.Title, returnedBookDto.Title);
-            Assert.Equal(bookDTO.ISBN, returnedBookDto.ISBN);
+            var result = await _controller.CreateBook(command, CancellationToken.None);
+            var createdAtResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            Assert.Equal(nameof(BooksController.GetBook), createdAtResult.ActionName);
         }
+
+        [Fact]
+        public async Task UpdateBook_ReturnsNoContent_OnSuccess()
+        {
+            var bookDto = new BookDTO();
+            var command = new UpdateBookCommand { Id = 1, Book = bookDto };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateBookCommand>(), It.IsAny<CancellationToken>()))
+                         .Returns(Task.FromResult(Unit.Value)); // Исправлено
+
+            var result = await _controller.UpdateBook(1, bookDto, CancellationToken.None);
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public async Task DeleteBook_ReturnsNoContent_WhenCommandValid()
+        {
+            var command = new DeleteBookCommand { bookId = 1 };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteBookCommand>(), It.IsAny<CancellationToken>()))
+                         .Returns(Task.FromResult(Unit.Value)); // Исправлено
+
+            var result = await _controller.DeleteBook(1, CancellationToken.None);
+            Assert.IsType<NoContentResult>(result);
+        }
+
     }
 }

@@ -33,14 +33,14 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task GetAllBooksAsync_ReturnsAllBooks()
         {
-            var books = await _repository.GetAllBooksAsync();
+            var books = await _repository.GetAllAsync();
             Assert.Equal(2, books.Count());
         }
 
         [Fact]
         public async Task GetBookByIdAsync_ReturnsCorrectBook()
         {
-            var book = await _repository.GetBookByIdAsync(1);
+            var book = await _repository.GetByIdAsync(1);
             Assert.NotNull(book);
             Assert.Equal("1984", book.Title);
         }
@@ -50,8 +50,8 @@ namespace LibraryAPI.Tests
         {
             var newBook = new Book { Id = 3, Title = "Fahrenheit 451", Genre = "Dystopia", ISBN = "11111", Description = "A book about censorship" };
 
-            await _repository.AddBookAsync(newBook);
-            var book = await _repository.GetBookByIdAsync(3);
+            await _repository.AddAsync(newBook);
+            var book = await _repository.GetByIdAsync(3);
 
             Assert.NotNull(book);
             Assert.Equal("Fahrenheit 451", book.Title);
@@ -60,9 +60,10 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task DeleteBookAsync_RemovesBookFromDatabase()
         {
-            await _repository.DeleteBookAsync(1);
-            var book = await _repository.GetBookByIdAsync(1);
-            Assert.Null(book);
+            var book = await _repository.GetByIdAsync(1);
+            await _repository.DeleteAsync(book!);
+            var deletedBook = await _repository.GetByIdAsync(1);
+            Assert.Null(deletedBook);
         }
     }
 }

@@ -1,18 +1,20 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using LibraryAPI.Persistence.Data;
-using LibraryAPI.Domain.Models;
-using LibraryAPI.Persistence.Repositories;
-using LibraryAPI.Domain.Interfaces;
+using LibraryAPI.Application.Commands.Book;
 using LibraryAPI.Application.Services;
 using LibraryAPI.Application.Services.Interfaces;
+using LibraryAPI.Domain.Models;
+using LibraryAPI.Domain.Interfaces;
+using LibraryAPI.Persistence.Data;
+using LibraryAPI.Persistence.Repositories;
+using LibraryAPI.Persistence.Services;
+using LibraryAPI.Persistence.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Hosting;
 using Moq;
 using Xunit;
 
@@ -24,6 +26,7 @@ namespace LibraryAPI.Tests
         private readonly string _testWebRoot;
         private readonly IImageService _imageService;
         private readonly IBookRepository _bookRepository;
+        private readonly string _uploadsPath;
 
         public ImageServiceTests()
         {
@@ -31,21 +34,18 @@ namespace LibraryAPI.Tests
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
-            _testWebRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            if (!Directory.Exists(_testWebRoot))
-            {
-                Directory.CreateDirectory(_testWebRoot);
-            }
-
-            var context = new LibraryDbContext(options);
-            _bookRepository = new BookRepository(context);
-
+            _context = new LibraryDbContext(options);
+            _bookRepository = new BookRepository(_context);
+            
+            _testWebRoot = Path.Combine(Path.GetTempPath(), "LibraryAPI_Tests", Guid.NewGuid().ToString());
+            Directory.CreateDirectory(_testWebRoot);
+            
             var envMock = new Mock<IWebHostEnvironment>();
             envMock.Setup(m => m.WebRootPath).Returns(_testWebRoot);
-
-            var memoryCache = new MemoryCache(new MemoryCacheOptions());
-
-            _imageService = new ImageService(envMock.Object, memoryCache, _bookRepository);
+            envMock.Setup(m => m.EnvironmentName).Returns("Test");
+            
+            _imageService = new ImageService(_testWebRoot + "/uploads");
+            _uploadsPath = Path.Combine(_testWebRoot, "uploads");
         }
 
         [Fact]
@@ -54,35 +54,48 @@ namespace LibraryAPI.Tests
             var content = "Fake image content";
             var fileName = "test.jpg";
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
-            var formFile = new FormFile(stream, 0, stream.Length, "file", fileName)
+            
+            var formFile = new FormFile(
+                baseStream: stream,
+                baseStreamOffset: 0,
+                length: stream.Length,
+                name: "file",
+                fileName: fileName)
             {
                 Headers = new HeaderDictionary(),
                 ContentType = "image/jpeg"
             };
 
-            var book = new Book
+            var book = new Book { Title = "Test Book" };
+            await _bookRepository.AddAsync(book);
+            await _context.SaveChangesAsync();
+
+            var handler = new UploadBookImageCommandHandler(_bookRepository, _imageService);
+            
+            var command = new UploadBookImageCommand
             {
-                Id = 1,
-                Title = "SomeTitle"
+                BookId = book.Id,
+                File = formFile
             };
-            await _bookRepository.AddBookAsync(book); 
             
-            var uploadsFolder = Path.Combine(_testWebRoot, "uploads");
-            if (!Directory.Exists(uploadsFolder))
-            {
-                Directory.CreateDirectory(uploadsFolder);
-            }
-
-            var url = await _imageService.UploadImageAsync(formFile, 1, CancellationToken.None);
-
-            Assert.False(string.IsNullOrEmpty(url));
+            var result = await handler.Handle(command, CancellationToken.None);
             
-            string filePath = Path.Combine(_testWebRoot, url.TrimStart('/'));
-            Assert.True(File.Exists(filePath));
+            Assert.NotNull(result);
+            Assert.StartsWith("/uploads/", result);
+            Assert.EndsWith(".jpg", result);
+
+            var fullPath = Path.Combine(_testWebRoot, result.TrimStart('/'));
+            Assert.True(File.Exists(fullPath));
+            
+            var fileInfo = new FileInfo(fullPath);
+            Assert.True(fileInfo.Length > 0);
         }
 
         public void Dispose()
         {
+            _context.Database.EnsureDeleted();
+            _context.Dispose();
+
             if (Directory.Exists(_testWebRoot))
             {
                 Directory.Delete(_testWebRoot, true);

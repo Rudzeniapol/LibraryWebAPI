@@ -1,6 +1,9 @@
-﻿using LibraryAPI.Application.Exceptions;
+﻿using LibraryAPI.Application.Commands.Author;
+using LibraryAPI.Application.Exceptions;
+using LibraryAPI.Application.Queries.Author;
 using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Models;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,18 +14,19 @@ namespace LibraryAPI.API.Controllers
     [Route("api/[controller]")]
     public class AuthorsController : ControllerBase
     {
-        private readonly IAuthorService _authorService;
+        private readonly IMediator _mediator;
 
-        public AuthorsController(IAuthorService authorService)
+        public AuthorsController(IMediator mediator)
         {
-            _authorService = authorService;
+            _mediator = mediator;
         }
         
         [Authorize(Policy = "AllUsers")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors(CancellationToken cancellationToken)
         {
-            var authors = await _authorService.GetAllAuthorsAsync(cancellationToken);
+            GetAuthorsQuery query = new GetAuthorsQuery();
+            var authors = await _mediator.Send(query, cancellationToken);
             return Ok(authors);
         }
         
@@ -30,24 +34,27 @@ namespace LibraryAPI.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Author>> GetAuthor(int id, CancellationToken cancellationToken)
         {
-            var author = await _authorService.GetAuthorByIdAsync(id, cancellationToken);
+            GetAuthorByIdQuery query = new GetAuthorByIdQuery()
+            {
+                Id = id
+            };
+            var author = await _mediator.Send(query, cancellationToken);
             return Ok(author);
         }
         
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
-        public async Task<ActionResult<Author>> CreateAuthor(Author author, CancellationToken cancellationToken)
+        public async Task<ActionResult<Author>> CreateAuthor([FromBody] AddAuthorCommand command, CancellationToken cancellationToken)
         {
-            await _authorService.AddAuthorAsync(author, cancellationToken);
-            return CreatedAtAction(nameof(GetAuthor), new { id = author.Id }, author);
+            await _mediator.Send(command, cancellationToken);
+            return CreatedAtAction(nameof(GetAuthor), new { id = command.Author.Id }, command.Author);
         }
         
         [Authorize(Policy = "AdminOnly")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAuthor(int id, Author author, CancellationToken cancellationToken)
+        [HttpPut]
+        public async Task<IActionResult> UpdateAuthor([FromBody] UpdateAuthorCommand command, CancellationToken cancellationToken)
         {
-            if (id != author.Id) throw new BadRequestException($"Введённый автор и id \"{id}\" не совпадают");
-            await _authorService.UpdateAuthorAsync(author, cancellationToken);
+            await _mediator.Send(command, cancellationToken);
             return NoContent();
         }
         
@@ -55,15 +62,23 @@ namespace LibraryAPI.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthor(int id, CancellationToken cancellationToken)
         {
-            await _authorService.DeleteAuthorAsync(id, cancellationToken);
+            DeleteAuthorCommand command = new DeleteAuthorCommand()
+            {
+                Id = id
+            };
+            await _mediator.Send(command, cancellationToken);
             return NoContent();
         }
         
         [Authorize(Policy = "AllUsers")]
         [HttpGet("{id}/books")]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooksByAuthor(int id)
+        public async Task<ActionResult<IEnumerable<Book>>> GetBooksByAuthor(int id, CancellationToken cancellationToken)
         {
-            var books = await _authorService.GetBooksByAuthorAsync(id);
+            GetBooksByAuthorQuery query = new GetBooksByAuthorQuery()
+            {
+                AuthorId = id
+            };
+            var books = await _mediator.Send(query, cancellationToken);
             return Ok(books);
         }
     }
