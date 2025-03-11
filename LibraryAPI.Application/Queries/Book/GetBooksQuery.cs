@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using LibraryAPI.Application.DTOs;
+using MediatR;
 
 namespace LibraryAPI.Application.Queries.Book;
 
-public class GetBooksQuery :IRequest<IEnumerable<Domain.Models.Book>>
+public class GetBooksQuery :IRequest<IEnumerable<BookDTO>>
 {
     public int Page { get; set; }
     public int PageSize { get; set; }

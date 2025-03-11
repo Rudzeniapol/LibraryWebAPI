@@ -1,19 +1,23 @@
-﻿using LibraryAPI.Domain.Interfaces;
+﻿using AutoMapper;
+using LibraryAPI.Application.DTOs;
+using LibraryAPI.Domain.Interfaces;
 using MediatR;
 
 namespace LibraryAPI.Application.Queries.Author;
 
-public class GetAuthorsQueryHandler : IRequestHandler<GetAuthorsQuery, IEnumerable<Domain.Models.Author>>
+public class GetAuthorsQueryHandler : IRequestHandler<GetAuthorsQuery, IEnumerable<AuthorDTO>>
 {
     private readonly IAuthorRepository _authorRepository;
+    private readonly IMapper _mapper;
     
-    public GetAuthorsQueryHandler(IAuthorRepository authorRepository)
+    public GetAuthorsQueryHandler(IAuthorRepository authorRepository, IMapper mapper)
     {
         _authorRepository = authorRepository;
+        _mapper = mapper;
     }
 
-    public async Task<IEnumerable<LibraryAPI.Domain.Models.Author>> Handle(GetAuthorsQuery query, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<AuthorDTO>> Handle(GetAuthorsQuery query, CancellationToken cancellationToken = default)
     {
-        return await _authorRepository.GetAllAsync(cancellationToken);
+        return _mapper.Map<IEnumerable<AuthorDTO>>(await _authorRepository.GetAllAsync(cancellationToken));
     }
 }

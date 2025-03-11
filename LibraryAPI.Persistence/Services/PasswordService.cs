@@ -1,6 +1,6 @@
-﻿using LibraryAPI.Application.Services.Interfaces;
+﻿using LibraryAPI.Persistence.Services.Interfaces;
 
-namespace LibraryAPI.Application.Services;
+namespace LibraryAPI.Persistence.Services;
 
 public class PasswordService : IPasswordService
 {

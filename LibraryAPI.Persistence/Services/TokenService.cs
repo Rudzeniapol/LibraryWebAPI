@@ -2,15 +2,14 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using LibraryAPI.Application.DTOs;
-using LibraryAPI.Application.Exceptions;
-using LibraryAPI.Application.Services.Interfaces;
+using LibraryAPI.Persistence.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
 using LibraryAPI.Domain.Models;
+using LibraryAPI.Persistence.DTOs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace LibraryAPI.Application.Services;
+namespace LibraryAPI.Persistence.Services;
 
 public class TokenService : ITokenService
 {
@@ -23,7 +22,7 @@ public class TokenService : ITokenService
         _userRepository = userRepository;
     }
 
-    public async Task<TokenDto> GenerateJwtToken(User user, bool populateExp,
+    public async Task<TokenDTO> GenerateJwtToken(User user, bool populateExp,
         CancellationToken cancellationToken = default)
     {
         var jwtSettings = _configuration.GetSection("Jwt");
@@ -56,7 +55,7 @@ public class TokenService : ITokenService
         await _userRepository.UpdateAsync(user, cancellationToken);
         var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-        return new TokenDto(accessToken, refreshToken);
+        return new TokenDTO(accessToken, refreshToken);
     }
 
     private string GenerateRefreshToken()

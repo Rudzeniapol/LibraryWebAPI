@@ -35,8 +35,7 @@ namespace LibraryAPI.Persistence.Repositories;
 
         public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
         {
-            _dbSet.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            _dbSet.Update(entity);
             await _context.SaveChangesAsync(cancellationToken);
         }
 

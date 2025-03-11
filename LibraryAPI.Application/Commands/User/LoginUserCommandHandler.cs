@@ -1,13 +1,14 @@
 ﻿using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
-using LibraryAPI.Application.Services;
-using LibraryAPI.Application.Services.Interfaces;
+using LibraryAPI.Persistence.Services;
+using LibraryAPI.Persistence.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
+using LibraryAPI.Persistence.DTOs;
 using MediatR;
 
 namespace LibraryAPI.Application.Commands.User;
 
-public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, TokenDto>
+public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, TokenDTO>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService _passwordService;
@@ -20,7 +21,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, TokenDt
         _tokenService = tokenService;
     }
 
-    public async Task<TokenDto> Handle(LoginUserCommand command, CancellationToken cancellationToken = default)
+    public async Task<TokenDTO> Handle(LoginUserCommand command, CancellationToken cancellationToken = default)
     {
         var existingUser = await _userRepository.GetUserByUsernameAsync(command.LoginUser.Username, cancellationToken);
         if (existingUser == null || !_passwordService.VerifyPassword(existingUser.PasswordHash,command.LoginUser.Password))

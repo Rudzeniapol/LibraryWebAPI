@@ -1,13 +1,14 @@
 ﻿using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
-using LibraryAPI.Application.Services.Interfaces;
+using LibraryAPI.Persistence.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
+using LibraryAPI.Persistence.DTOs;
 using LibraryAPI.Persistence.Repositories;
 using MediatR;
 
 namespace LibraryAPI.Application.Commands.Token;
 
-public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, TokenDto>
+public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, TokenDTO>
 {
     private readonly ITokenService _tokenService;
     private readonly IUserRepository _userRepository;
@@ -18,7 +19,7 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, T
         _userRepository = userRepository;
     }
     
-    public async Task<TokenDto> Handle(RefreshTokenCommand tokenDto, CancellationToken cancellationToken = default)
+    public async Task<TokenDTO> Handle(RefreshTokenCommand tokenDto, CancellationToken cancellationToken = default)
     {
         var principal = _tokenService.GetPrincipalFromExpiredToken(tokenDto.Token.AccessToken);
         var user = await _userRepository.GetUserByUsernameAsync(principal.Identity.Name, cancellationToken);

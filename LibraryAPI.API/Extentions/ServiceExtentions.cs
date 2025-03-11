@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using LibraryAPI.API.Validators;
@@ -8,15 +9,16 @@ using LibraryAPI.Application.Commands.Token;
 using LibraryAPI.Application.Commands.User;
 using LibraryAPI.Persistence.Data;
 using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.DTOs.MappingProfiles;
 using LibraryAPI.Application.Queries.Author;
 using LibraryAPI.Application.Queries.Book;
 using LibraryAPI.Application.Queries.Notification;
 using LibraryAPI.Application.Queries.User;
 using LibraryAPI.Persistence.Repositories;
-using LibraryAPI.Application.Services;
-using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
 using LibraryAPI.Domain.Models;
+using LibraryAPI.Persistence;
+using LibraryAPI.Persistence.DTOs;
 using LibraryAPI.Persistence.Services;
 using LibraryAPI.Persistence.Services.Interfaces;
 using MediatR;
@@ -29,13 +31,15 @@ namespace LibraryAPI.API.Extentions;
 
 public static class ServiceExtentions
 {
-    public static IServiceCollection ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureAuthentication(this IServiceCollection services,
+        IConfiguration configuration)
     {
-        var jwtKey = configuration["Jwt:Key"] ?? throw new ArgumentNullException("Jwt:Key is missing in appsettings.json");
+        var jwtKey = configuration["Jwt:Key"] ??
+                     throw new ArgumentNullException("Jwt:Key is missing in appsettings.json");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
-            {   
+            {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -53,11 +57,25 @@ public static class ServiceExtentions
 
     public static IServiceCollection ConfigureValidation(this IServiceCollection services)
     {
-        services.AddValidatorsFromAssemblyContaining<RegisterUserCommandValidator>(); // Автоматическая регистрация валидаторов
+        services.AddValidatorsFromAssemblyContaining<RegisterUserCommandValidator>();
         services.AddFluentValidationAutoValidation();
         return services;
     }
-    
+
+    public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
+    {
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibraryAPI", Version = "v1" });
+            
+            var xmlFile = $"{typeof(BorrowBookCommand).Assembly.GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            c.IncludeXmlComments(xmlPath);
+        });
+        
+        return services;
+    }
+
     public static IServiceCollection ConfigureDatabaseContext(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -105,53 +123,54 @@ public static class ServiceExtentions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IAuthorRepository, AuthorRepository>();
+        services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
+        
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IPasswordService, PasswordService>();
         services.AddScoped<IImageService>(provider => 
-            new ImageService(Path.Combine(provider.GetRequiredService<IWebHostEnvironment>().WebRootPath, "uploads")));
+            new ImageService(provider.GetRequiredService<IWebHostEnvironment>().WebRootPath));
         
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         
-        services.AddScoped<IRequestHandler<AddBookCommand>, AddBookCommandHandler>();
+        services.AddScoped<IRequestHandler<AddBookCommand, int>, AddBookCommandHandler>();
         services.AddScoped<IRequestHandler<BorrowBookCommand>, BorrowBookCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteBookCommand>, DeleteBookCommandHandler>();
         services.AddScoped<IRequestHandler<ReturnBookCommand>, ReturnBookCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateBookCommand>, UpdateBookCommandHandler>();
-        services.AddScoped<IRequestHandler<UploadBookImageCommand, string>, UploadBookImageCommandHandler>();
+        services.AddScoped<IRequestHandler<UploadBookImageCommand, ImageUrlDTO>, UploadBookImageCommandHandler>();
         
-        services.AddScoped<IRequestHandler<AddAuthorCommand>, AddAuthorCommandHandler>();
+        services.AddScoped<IRequestHandler<AddAuthorCommand, int>, AddAuthorCommandHandler>();
         services.AddScoped<IRequestHandler<DeleteAuthorCommand>, DeleteAuthorCommandHandler>();
         services.AddScoped<IRequestHandler<UpdateAuthorCommand>, UpdateAuthorCommandHandler>();
         
-        services.AddScoped<IRequestHandler<LoginUserCommand, TokenDto>, LoginUserCommandHandler>();
-        services.AddScoped<IRequestHandler<RegisterUserCommand, User>, RegisterUserCommandHandler>();
+        services.AddScoped<IRequestHandler<LoginUserCommand, TokenDTO>, LoginUserCommandHandler>();
+        services.AddScoped<IRequestHandler<RegisterUserCommand, RegisterUserDTO>, RegisterUserCommandHandler>();
         
-        services.AddScoped<IRequestHandler<RefreshTokenCommand, TokenDto>, RefreshTokenCommandHandler>();
+        services.AddScoped<IRequestHandler<RefreshTokenCommand, TokenDTO>, RefreshTokenCommandHandler>();
         
-        services.AddScoped<IRequestHandler<GetAuthorByIdQuery, Author>, GetAuthorByIdQueryHandler>();
-        services.AddScoped<IRequestHandler<GetAuthorsQuery, IEnumerable<Author>>, GetAuthorsQueryHandler>();
-        services.AddScoped<IRequestHandler<GetAuthorByIdQuery, Author>, GetAuthorByIdQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAuthorByIdQuery, AuthorDTO>, GetAuthorByIdQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAuthorsQuery, IEnumerable<AuthorDTO>>, GetAuthorsQueryHandler>();
+        services.AddScoped<IRequestHandler<GetBooksByAuthorQuery, IEnumerable<BookDTO>>, GetBooksByAuthorQueryHandler>();
         
-        services.AddScoped<IRequestHandler<GetAllBooksQuery, IEnumerable<Book>>, GetAllBooksQueryHandler>();
-        services.AddScoped<IRequestHandler<GetBookByIdQuery, Book>, GetBookByIdQueryHandler>();
-        services.AddScoped<IRequestHandler<GetBookByISBNQuery, Book>, GetBookByISBNQueryHandler>();
+        services.AddScoped<IRequestHandler<GetAllBooksQuery, IEnumerable<BookDTO>>, GetAllBooksQueryHandler>();
+        services.AddScoped<IRequestHandler<GetBookByIdQuery, BookDTO>, GetBookByIdQueryHandler>();
+        services.AddScoped<IRequestHandler<GetBookByISBNQuery, BookDTO>, GetBookByISBNQueryHandler>();
         services.AddScoped<IRequestHandler<GetBookImageQuery, Stream>, GetBookImageQueryHandler>();
-        services.AddScoped<IRequestHandler<GetBooksQuery, IEnumerable<Book>>, GetBooksQueryHandler>();
+        services.AddScoped<IRequestHandler<GetBooksQuery, IEnumerable<BookDTO>>, GetBooksQueryHandler>();
         
         services.AddScoped<IRequestHandler<GetOverdueBooksQuery, List<string>>, GetOverdueBooksQueryHandler>();
         
-        services.AddScoped<IRequestHandler<GetUserByIdQuery, User>, GetUserByIdQueryHandler>();
-        services.AddScoped<IRequestHandler<GetUserByUsernameQuery, User>, GetUserByUsernameQueryHandler>();
+        services.AddScoped<IRequestHandler<GetUserByIdQuery, UserDTO>, GetUserByIdQueryHandler>();
+        services.AddScoped<IRequestHandler<GetUserByUsernameQuery, UserDTO>, GetUserByUsernameQueryHandler>();
         
         return services;
     }
 
     public static IServiceCollection ConfigureAutoMapper(this IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(AuthorMappingProfile));
-        services.AddAutoMapper(typeof(BookMappingProfile));
-        services.AddAutoMapper(typeof(UserMappingProfile));
-        
+        services.AddAutoMapper(typeof(AuthorMappingProfile).Assembly);
+        var mapper = services.BuildServiceProvider().GetRequiredService<IMapper>();
+        mapper.ConfigurationProvider.AssertConfigurationIsValid();
         return services;
     }
 }

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace LibraryAPI.Application.Commands.Book;
 
-public class AddBookCommandHandler : IRequestHandler<AddBookCommand>
+public class AddBookCommandHandler : IRequestHandler<AddBookCommand, int>
 {
      private readonly IBookRepository _bookRepository;
      private readonly IMapper _mapper;
@@ -17,14 +17,16 @@ public class AddBookCommandHandler : IRequestHandler<AddBookCommand>
           _mapper = mapper;
      }
 
-     public async Task Handle(AddBookCommand command, CancellationToken cancellationToken = default)
+     public async Task<int> Handle(AddBookCommand command, CancellationToken cancellationToken = default)
      {
-          var bookToAdd = _mapper.Map<BookDTO, Domain.Models.Book>(command.Book);
-          var existingBook = await _bookRepository.GetBookByISBNAsync(bookToAdd.ISBN, cancellationToken);
+          var existingBook = await _bookRepository.GetBookByISBNAsync(command.Book.ISBN, cancellationToken);
           if (existingBook != null)
           {
-               throw new EntityExistsException($"Книга с ISBN {bookToAdd.ISBN} уже существует");
+               throw new EntityExistsException($"Книга с ISBN {command.Book.ISBN} уже существует");
           }
+          var bookToAdd = _mapper.Map<BookDTO, Domain.Models.Book>(command.Book);
           await _bookRepository.AddAsync(bookToAdd, cancellationToken);
+          var createdBook = await _bookRepository.GetBookByISBNAsync(command.Book.ISBN, cancellationToken);
+          return createdBook.Id;
      }
 }

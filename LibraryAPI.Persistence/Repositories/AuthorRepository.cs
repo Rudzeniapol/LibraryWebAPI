@@ -19,9 +19,9 @@ namespace LibraryAPI.Persistence.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<bool> AuthorExistsAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Author?> AuthorExistsAsync(Author author, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.AnyAsync(a => a.Id == id, cancellationToken);
+            return await _dbSet.FirstOrDefaultAsync(a => a.FirstName.ToLower() == author.FirstName.ToLower() && a.LastName.ToLower() == author.LastName.ToLower() && a.Country.ToLower() == author.Country.ToLower() && a.DateOfBirth.Date == author.DateOfBirth.Date, cancellationToken);
         }
     }
 }

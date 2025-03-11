@@ -1,14 +1,14 @@
 ﻿using LibraryAPI.Persistence.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace LibraryAPI.Persistence.Services;
 
 public class ImageService : IImageService
 {
     private readonly string _imageStoragePath;
-
-    public ImageService(string imageStoragePath)
+    public ImageService(string webImageStoragePath)
     {
-        _imageStoragePath = imageStoragePath;
+        _imageStoragePath = Path.Combine(webImageStoragePath, "uploads");
         
         if (!Directory.Exists(_imageStoragePath))
         {
@@ -16,8 +16,9 @@ public class ImageService : IImageService
         }
     }
 
-    public async Task<string> SaveImageAsync(Stream imageStream, string fileName)
+    public async Task<string> SaveImageAsync(Stream imageStream, IFormFile file, string title)
     {
+        var fileName = $"{title.Replace(" ", "_")}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
         var filePath = Path.Combine(_imageStoragePath, fileName);
         
         using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -25,7 +26,7 @@ public class ImageService : IImageService
             await imageStream.CopyToAsync(fileStream);
         }
 
-        return filePath;
+        return $"/uploads/{fileName}";
     }
 
     public Task<Stream> GetImageAsync(string fileName)

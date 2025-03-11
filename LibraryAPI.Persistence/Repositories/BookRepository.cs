@@ -21,20 +21,14 @@ namespace LibraryAPI.Persistence.Repositories
             return await _dbSet.AnyAsync(b => b.Id == id, cancellationToken);
         }
         
-        public async Task BorrowBookAsync(Book book, int userId, int days, CancellationToken cancellationToken = default)
+        public async Task BorrowBookAsync(Book book, CancellationToken cancellationToken = default)
         {
-            book.UserId = userId;
-            book.BorrowedAt = DateTime.UtcNow;
-            book.ReturnBy = DateTime.UtcNow.AddDays(days);
             _dbSet.Update(book);
             await _context.SaveChangesAsync(cancellationToken);
         }
         
         public async Task ReturnBookAsync(Book book, CancellationToken cancellationToken = default)
         {
-            book.UserId = null;
-            book.BorrowedAt = null;
-            book.ReturnBy = null;
             _dbSet.Update(book);
             await _context.SaveChangesAsync(cancellationToken);
         }

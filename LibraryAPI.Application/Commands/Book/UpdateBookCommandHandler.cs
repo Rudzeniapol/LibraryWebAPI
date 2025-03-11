@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
-using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
 using MediatR;
 
@@ -25,7 +24,7 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand>
         {
             throw new NotFoundException($"Книга с id {command.Id} не найдена");
         }
-        _mapper.Map<BookDTO, Domain.Models.Book>(command.Book, existingBook);
+        _mapper.Map(command.Book, existingBook);
         await _bookRepository.UpdateAsync(existingBook, cancellationToken);
     }
 }

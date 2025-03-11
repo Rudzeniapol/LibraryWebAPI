@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using LibraryAPI.Application.Queries.Notification;
 using LibraryAPI.Persistence.Data;
 using LibraryAPI.Domain.Models;
-using LibraryAPI.Application.Services;
+using LibraryAPI.Persistence.Services;
 using LibraryAPI.Domain.Interfaces;
 using LibraryAPI.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;

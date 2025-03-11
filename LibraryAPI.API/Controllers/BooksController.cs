@@ -5,7 +5,6 @@ using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
 using LibraryAPI.Application.Queries.Book;
 using LibraryAPI.Application.Queries.Notification;
-using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Models;
 using LibraryAPI.Persistence.Services.Interfaces;
 using MediatR;
@@ -90,8 +89,8 @@ namespace LibraryAPI.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Book>> CreateBook([FromBody] AddBookCommand command, CancellationToken cancellationToken)
         {
-            await _mediator.Send(command, cancellationToken);
-            return CreatedAtAction(nameof(GetBook), command.Book);
+            var bookId = await _mediator.Send(command, cancellationToken);
+            return CreatedAtAction(nameof(GetBook), new{ id = bookId },  command);
         }
 
         [Authorize(Policy = "AllUsers")]

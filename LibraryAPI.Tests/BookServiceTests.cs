@@ -6,10 +6,11 @@ using AutoMapper;
 using LibraryAPI.Application.Commands.Book;
 using LibraryAPI.Persistence.Data;
 using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.DTOs.MappingProfiles;
 using LibraryAPI.Application.Queries.Book;
 using LibraryAPI.Domain.Models;
 using LibraryAPI.Persistence.Repositories;
-using LibraryAPI.Application.Services;
+using LibraryAPI.Persistence.Services;
 using LibraryAPI.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -78,7 +79,7 @@ namespace LibraryAPI.Tests
             });
             await _context.SaveChangesAsync();
 
-            var handler = new GetAllBooksQueryHandler(_bookRepository);
+            var handler = new GetAllBooksQueryHandler(_bookRepository, _mapper);
             
             GetAllBooksQuery query = new GetAllBooksQuery();
             
@@ -94,7 +95,7 @@ namespace LibraryAPI.Tests
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
 
-            var handler = new GetBookByIdQueryHandler(_bookRepository);
+            var handler = new GetBookByIdQueryHandler(_bookRepository, _mapper);
             
             GetBookByIdQuery query = new GetBookByIdQuery { Id = book.Id };
             
@@ -119,8 +120,6 @@ namespace LibraryAPI.Tests
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
 
-            _context.Entry(book).State = EntityState.Detached;
-
             var updatedBook = new BookDTO
             { 
                 Title = "1984 - Updated", 
@@ -131,16 +130,22 @@ namespace LibraryAPI.Tests
             };
 
             var handler = new UpdateBookCommandHandler(_bookRepository, _mapper);
-            
-            UpdateBookCommand command = new UpdateBookCommand();
-            command.Book = updatedBook;
-            command.Id = book.Id;
-            await handler.Handle(command, CancellationToken.None);
+    
+            UpdateBookCommand command = new UpdateBookCommand()
+            {
+                Book = updatedBook,
+                Id = book.Id
+            };
 
+            await handler.Handle(command, CancellationToken.None);
+            
             var result = await _context.Books.FirstOrDefaultAsync(b => b.Id == book.Id);
             Assert.NotNull(result);
             Assert.Equal("1984 - Updated", result.Title);
             Assert.Equal("Classic", result.Genre);
+            Assert.Equal("Updated description", result.Description);
+            Assert.Equal("12345", result.ISBN);
+            Assert.Equal(1, result.AuthorId);
         }
 
         [Fact]

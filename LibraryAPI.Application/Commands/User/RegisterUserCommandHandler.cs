@@ -1,24 +1,27 @@
-﻿using LibraryAPI.Application.DTOs;
+﻿using AutoMapper;
+using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
-using LibraryAPI.Application.Services.Interfaces;
+using LibraryAPI.Persistence.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
 using MediatR;
 
 namespace LibraryAPI.Application.Commands.User;
 
-public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Domain.Models.User>
+public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserDTO>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordService _passwordService;
+    private readonly IMapper _mapper;
     
     
-    public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordService passwordService)
+    public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordService passwordService, IMapper mapper)
     {
         _userRepository = userRepository;
         _passwordService = passwordService;
+        _mapper = mapper;
     }
 
-    public async Task<Domain.Models.User> Handle(RegisterUserCommand command, CancellationToken cancellationToken = default)
+    public async Task<RegisterUserDTO> Handle(RegisterUserCommand command, CancellationToken cancellationToken = default)
     {
         var existingUser = await _userRepository.GetUserByUsernameAsync(command.RegisterUser.Username, cancellationToken);
         if (existingUser != null)
@@ -31,6 +34,6 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, D
             Role = command.RegisterUser.Role,
         };
         await _userRepository.AddAsync(user, cancellationToken);
-        return user;
+        return _mapper.Map<RegisterUserDTO>(user);
     }
 }

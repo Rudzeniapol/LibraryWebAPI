@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Data;
+using System.Net;
 using System.Text.Json;
 using FluentValidation;
 using LibraryAPI.Application.Exceptions;
@@ -87,6 +88,10 @@ namespace LibraryAPI.API.Middlewares
                     (int)HttpStatusCode.BadRequest,
                     new { error = "Ошибка валидации данных", code = 400, details = ex.Message },
                     ex.Message);
+            }
+            catch (DataException ex)
+            {
+                _logger.LogError(ex.Message);
             }
             catch (Exception ex)
             {

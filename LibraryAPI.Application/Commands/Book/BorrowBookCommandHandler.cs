@@ -27,11 +27,15 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand>
         {
             throw new BadRequestException("Книга занята");
         }
+        
         var user = await _userRepository.GetByIdAsync(command.userId, cancellationToken);
         if (user == null)
         {
             throw new NotFoundException($"Пользователь с id {command.userId} не найден");
         }
-        await _bookRepository.BorrowBookAsync(book, user.Id, command.days, cancellationToken);
+        book.UserId = command.userId;
+        book.BorrowedAt = DateTime.UtcNow;
+        book.ReturnBy = DateTime.UtcNow.AddDays(command.days);
+        await _bookRepository.BorrowBookAsync(book, cancellationToken);
     }
 }

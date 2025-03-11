@@ -1,8 +1,11 @@
-﻿using LibraryAPI.Application.Commands.User;
+﻿using AutoMapper;
+using LibraryAPI.Application.Commands.User;
 using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.DTOs.MappingProfiles;
 using LibraryAPI.Application.Exceptions;
-using LibraryAPI.Application.Services.Interfaces;
+using LibraryAPI.Persistence.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
+using LibraryAPI.Persistence.DTOs;
 using Moq;
 
 namespace LibraryAPI.Tests
@@ -12,12 +15,18 @@ namespace LibraryAPI.Tests
         private readonly Mock<IUserRepository> _userRepositoryMock;
         private readonly Mock<IPasswordService> _passwordServiceMock;
         private readonly RegisterUserCommandHandler _handler;
+        private readonly IMapper _mapper;
 
         public RegisterUserCommandHandlerTests()
         {
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<UserMappingProfile>();
+            });
+            _mapper = configuration.CreateMapper();
             _userRepositoryMock = new Mock<IUserRepository>();
             _passwordServiceMock = new Mock<IPasswordService>();
-            _handler = new RegisterUserCommandHandler(_userRepositoryMock.Object, _passwordServiceMock.Object);
+            _handler = new RegisterUserCommandHandler(_userRepositoryMock.Object, _passwordServiceMock.Object, _mapper);
         }
 
         [Fact]
@@ -43,7 +52,7 @@ namespace LibraryAPI.Tests
             
             _userRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Domain.Models.User>(), It.IsAny<CancellationToken>()), Times.Once);
             Assert.Equal(request.RegisterUser.Username, result.Username);
-            Assert.Equal("hashed_password", result.PasswordHash);
+            Assert.Equal("hashed_password", result.Password);
         }
 
         [Fact]
@@ -105,7 +114,7 @@ namespace LibraryAPI.Tests
                 PasswordHash = "hashed_password"
             };
 
-            var expectedToken = new TokenDto("access_token", "refresh_token");
+            var expectedToken = new TokenDTO("access_token", "refresh_token");
             
             var request = new LoginUserCommand
             {
@@ -142,7 +151,7 @@ namespace LibraryAPI.Tests
                 PasswordHash = "hashed_password"
             };
 
-            var testToken = new TokenDto("test_access", "test_refresh");
+            var testToken = new TokenDTO("test_access", "test_refresh");
             
             var request = new LoginUserCommand
             {
@@ -164,7 +173,7 @@ namespace LibraryAPI.Tests
             
             var result = await _handler.Handle(request, CancellationToken.None);
             
-            Assert.IsType<TokenDto>(result);
+            Assert.IsType<TokenDTO>(result);
             Assert.False(string.IsNullOrEmpty(result.AccessToken));
             Assert.False(string.IsNullOrEmpty(result.RefreshToken));
         }

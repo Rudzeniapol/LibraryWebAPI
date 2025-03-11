@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryAPI.Application.Queries.Book;
 
-public class GetBooksQueryHandler : IRequestHandler<GetBooksQuery, IEnumerable<Domain.Models.Book>>
+public class GetBooksQueryHandler : IRequestHandler<GetBooksQuery, IEnumerable<BookDTO>>
 {
     private readonly IBookRepository _bookRepository;
     private readonly IMapper _mapper;
@@ -17,10 +17,10 @@ public class GetBooksQueryHandler : IRequestHandler<GetBooksQuery, IEnumerable<D
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<Domain.Models.Book>> Handle(GetBooksQuery query, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<BookDTO>> Handle(GetBooksQuery query, CancellationToken cancellationToken = default)
     {
         var booksQuery = await _bookRepository.GetBooksQuery(query.Page,
             query.PageSize, query.Genre, query.Title, cancellationToken);
-        return _mapper.Map<IEnumerable<Domain.Models.Book>>(booksQuery);
+        return _mapper.Map<IEnumerable<BookDTO>>(booksQuery);
     }
 }

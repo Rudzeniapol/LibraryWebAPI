@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using LibraryAPI.Application.Commands.User;
 using LibraryAPI.Persistence.Data;
 using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.DTOs.MappingProfiles;
 using LibraryAPI.Application.Queries.User;
 using LibraryAPI.Domain.Models;
 using LibraryAPI.Persistence.Repositories;
 using LibraryAPI.Domain.Interfaces;
-using LibraryAPI.Application.Services;
-using LibraryAPI.Application.Services.Interfaces;
+using LibraryAPI.Persistence.Services;
+using LibraryAPI.Persistence.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -22,9 +24,15 @@ namespace LibraryAPI.Tests
     {
         private readonly IUserRepository _context;
         private readonly IPasswordService _passwordService;
+        private readonly IMapper _mapper;
 
         public UserServiceTests()
         {
+            var conf = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<UserMappingProfile>();
+            });
+            _mapper = conf.CreateMapper();
             _passwordService = new PasswordService();
             var options = new DbContextOptionsBuilder<LibraryDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -38,7 +46,7 @@ namespace LibraryAPI.Tests
         {
             RegisterUserDTO user = new RegisterUserDTO() {Username = "username", Password = "password", Role = "admin"};
 
-            var handler = new RegisterUserCommandHandler(_context, _passwordService);
+            var handler = new RegisterUserCommandHandler(_context, _passwordService, _mapper);
 
             RegisterUserCommand command = new RegisterUserCommand();
             
@@ -57,7 +65,7 @@ namespace LibraryAPI.Tests
             var user = new User { Username = "testUser", PasswordHash = BCrypt.Net.BCrypt.HashPassword("testPass"), Role = "admin" };
             await _context.AddAsync(user);
 
-            var handler = new GetUserByUsernameQueryHandler(_context);
+            var handler = new GetUserByUsernameQueryHandler(_context, _mapper);
             
             GetUserByUsernameQuery query = new GetUserByUsernameQuery();
             query.Username = user.Username;

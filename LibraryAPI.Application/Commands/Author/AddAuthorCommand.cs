@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using LibraryAPI.Application.DTOs;
+using MediatR;
 
 namespace LibraryAPI.Application.Commands.Author;
 
-public class AddAuthorCommand : IRequest
+public class AddAuthorCommand : IRequest<int>
 {
-    public Domain.Models.Author Author { get; set; }
+    public ChangeAuthorDTO Author { get; set; }
 }

@@ -32,6 +32,9 @@ public class ReturnBookCommandHandler : IRequestHandler<ReturnBookCommand>
         {
             throw new BadRequestException("Невалидная информация о возвращаемой книге");
         }
+        book.UserId = null;
+        book.BorrowedAt = null;
+        book.ReturnBy = null;
         await _bookRepository.ReturnBookAsync(book, cancellationToken);
     }
 }

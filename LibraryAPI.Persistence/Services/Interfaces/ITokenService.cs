@@ -1,11 +1,11 @@
 ﻿using System.Security.Claims;
-using LibraryAPI.Application.DTOs;
 using LibraryAPI.Domain.Models;
+using LibraryAPI.Persistence.DTOs;
 
-namespace LibraryAPI.Application.Services.Interfaces;
+namespace LibraryAPI.Persistence.Services.Interfaces;
 
 public interface ITokenService
 {
-    Task<TokenDto> GenerateJwtToken(User user, bool populateExp, CancellationToken cancellationToken = default);
+    Task<TokenDTO> GenerateJwtToken(User user, bool populateExp, CancellationToken cancellationToken = default);
     ClaimsPrincipal GetPrincipalFromExpiredToken(string token, CancellationToken cancellationToken = default);
 }

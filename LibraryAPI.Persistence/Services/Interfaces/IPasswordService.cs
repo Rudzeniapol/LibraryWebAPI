@@ -1,4 +1,4 @@
-﻿namespace LibraryAPI.Application.Services.Interfaces;
+﻿namespace LibraryAPI.Persistence.Services.Interfaces;
 
 public interface IPasswordService
 {

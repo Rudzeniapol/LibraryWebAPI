@@ -1,22 +1,26 @@
-﻿using LibraryAPI.Application.Exceptions;
+﻿using AutoMapper;
+using LibraryAPI.Application.DTOs;
+using LibraryAPI.Application.Exceptions;
 using LibraryAPI.Domain.Interfaces;
 using LibraryAPI.Persistence.Services.Interfaces;
 using MediatR;
 
 namespace LibraryAPI.Application.Commands.Book;
 
-public class UploadBookImageCommandHandler : IRequestHandler<UploadBookImageCommand, string>
+public class UploadBookImageCommandHandler : IRequestHandler<UploadBookImageCommand, ImageUrlDTO>
 {
     private readonly IBookRepository _bookRepository;
     private readonly IImageService _imageService;
+    private readonly IMapper _mapper;
 
-    public UploadBookImageCommandHandler(IBookRepository bookRepository, IImageService imageService)
+    public UploadBookImageCommandHandler(IBookRepository bookRepository, IImageService imageService, IMapper mapper)
     {
         _bookRepository = bookRepository;
         _imageService = imageService;
+        _mapper = mapper;
     }
 
-    public async Task<string> Handle(UploadBookImageCommand request, CancellationToken cancellationToken)
+    public async Task<ImageUrlDTO> Handle(UploadBookImageCommand request, CancellationToken cancellationToken)
     {
         var book = await _bookRepository.GetByIdAsync(request.BookId, cancellationToken);
         if (book == null)
@@ -24,9 +28,13 @@ public class UploadBookImageCommandHandler : IRequestHandler<UploadBookImageComm
             throw new NotFoundException($"Книга с id {request.BookId} не найдена");
         }
 
-        var fileName = $"{book.Title.Replace(" ", "_")}_{Guid.NewGuid()}{Path.GetExtension(request.File.FileName)}";
-        var filePath = await _imageService.SaveImageAsync(request.File.OpenReadStream(), fileName);
+        
+        var filePath = await _imageService.SaveImageAsync(request.File.OpenReadStream(), request.File, book.Title);
 
-        return $"/uploads/{fileName}";
+        ImageUrlDTO imageUrlDTO = new ImageUrlDTO
+        {
+            ImageUrl = filePath
+        };
+        return imageUrlDTO;
     }
 }

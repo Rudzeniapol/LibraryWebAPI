@@ -29,7 +29,7 @@ namespace LibraryAPI.Tests
         [Fact]
         public async Task GetBook_ReturnsOk_WhenBookExists()
         {
-            var book = new Book { Id = 1, Title = "1984" };
+            var book = new BookDTO { Title = "1984" };
             _mediatorMock.Setup(m => m.Send(It.Is<GetBookByIdQuery>(q => q.Id == 1), It.IsAny<CancellationToken>()))
                         .ReturnsAsync(book);
 
@@ -44,7 +44,7 @@ namespace LibraryAPI.Tests
         {
             var command = new AddBookCommand { Book = new BookDTO() };
             _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
-                         .Returns(Task.FromResult(Unit.Value)); // Исправлено
+                         .Returns(Task.FromResult(1));
 
             var result = await _controller.CreateBook(command, CancellationToken.None);
             var createdAtResult = Assert.IsType<CreatedAtActionResult>(result.Result);
@@ -57,7 +57,7 @@ namespace LibraryAPI.Tests
             var bookDto = new BookDTO();
             var command = new UpdateBookCommand { Id = 1, Book = bookDto };
             _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateBookCommand>(), It.IsAny<CancellationToken>()))
-                         .Returns(Task.FromResult(Unit.Value)); // Исправлено
+                         .Returns(Task.FromResult(Unit.Value));
 
             var result = await _controller.UpdateBook(1, bookDto, CancellationToken.None);
             Assert.IsType<NoContentResult>(result);
@@ -68,7 +68,7 @@ namespace LibraryAPI.Tests
         {
             var command = new DeleteBookCommand { bookId = 1 };
             _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteBookCommand>(), It.IsAny<CancellationToken>()))
-                         .Returns(Task.FromResult(Unit.Value)); // Исправлено
+                         .Returns(Task.FromResult(Unit.Value));
 
             var result = await _controller.DeleteBook(1, CancellationToken.None);
             Assert.IsType<NoContentResult>(result);

@@ -3,9 +3,11 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using LibraryAPI.Application.Commands.Book;
-using LibraryAPI.Application.Services;
-using LibraryAPI.Application.Services.Interfaces;
+using LibraryAPI.Application.DTOs.MappingProfiles;
+using LibraryAPI.Persistence.Services;
+using LibraryAPI.Persistence.Services.Interfaces;
 using LibraryAPI.Domain.Models;
 using LibraryAPI.Domain.Interfaces;
 using LibraryAPI.Persistence.Data;
@@ -27,6 +29,7 @@ namespace LibraryAPI.Tests
         private readonly IImageService _imageService;
         private readonly IBookRepository _bookRepository;
         private readonly string _uploadsPath;
+        private readonly IMapper _mapper;
 
         public ImageServiceTests()
         {
@@ -34,6 +37,11 @@ namespace LibraryAPI.Tests
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<ImageMappingProfile>();
+            });
+            _mapper = configuration.CreateMapper();
             _context = new LibraryDbContext(options);
             _bookRepository = new BookRepository(_context);
             
@@ -44,7 +52,7 @@ namespace LibraryAPI.Tests
             envMock.Setup(m => m.WebRootPath).Returns(_testWebRoot);
             envMock.Setup(m => m.EnvironmentName).Returns("Test");
             
-            _imageService = new ImageService(_testWebRoot + "/uploads");
+            _imageService = new ImageService(envMock.Object.WebRootPath);
             _uploadsPath = Path.Combine(_testWebRoot, "uploads");
         }
 
@@ -70,7 +78,7 @@ namespace LibraryAPI.Tests
             await _bookRepository.AddAsync(book);
             await _context.SaveChangesAsync();
 
-            var handler = new UploadBookImageCommandHandler(_bookRepository, _imageService);
+            var handler = new UploadBookImageCommandHandler(_bookRepository, _imageService, _mapper);
             
             var command = new UploadBookImageCommand
             {
@@ -81,10 +89,10 @@ namespace LibraryAPI.Tests
             var result = await handler.Handle(command, CancellationToken.None);
             
             Assert.NotNull(result);
-            Assert.StartsWith("/uploads/", result);
-            Assert.EndsWith(".jpg", result);
+            Assert.StartsWith("/uploads/", result.ImageUrl);
+            Assert.EndsWith(".jpg", result.ImageUrl);
 
-            var fullPath = Path.Combine(_testWebRoot, result.TrimStart('/'));
+            var fullPath = Path.Combine(_testWebRoot, result.ImageUrl.TrimStart('/'));
             Assert.True(File.Exists(fullPath));
             
             var fileInfo = new FileInfo(fullPath);

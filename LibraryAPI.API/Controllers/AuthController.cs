@@ -7,7 +7,6 @@ using System.Text;
 using LibraryAPI.Application.Commands.User;
 using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
-using LibraryAPI.Application.Services.Interfaces;
 using MediatR;
 
 namespace LibraryAPI.API.Controllers
@@ -27,7 +26,7 @@ namespace LibraryAPI.API.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand command, CancellationToken cancellationToken)
         {
             var newUser = await _mediator.Send(command, cancellationToken);
-            return Ok(new { message = "Пользователь зарегистрирован", userId = newUser.Id });
+            return Ok(new { message = "Пользователь зарегистрирован"});
         }
         
         [HttpPost("login")]
