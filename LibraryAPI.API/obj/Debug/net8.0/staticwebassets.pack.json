@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
+      "PackagePath": "staticwebassets\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png",
+      "PackagePath": "staticwebassets\\uploads\\Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png"
+    },
+    {
+      "Id": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png",
+      "PackagePath": "staticwebassets\\uploads\\Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png"
+    },
+    {
+      "Id": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png",
+      "PackagePath": "staticwebassets\\uploads\\Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png"
+    },
+    {
+      "Id": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png",
+      "PackagePath": "staticwebassets\\uploads\\Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png"
+    },
+    {
+      "Id": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg",
+      "PackagePath": "staticwebassets\\uploads\\photo_2024-12-22_14-35-12.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.LibraryAPI.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.LibraryAPI.API.props",
+      "PackagePath": "build\\LibraryAPI.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.LibraryAPI.API.props",
+      "PackagePath": "buildMultiTargeting\\LibraryAPI.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.LibraryAPI.API.props",
+      "PackagePath": "buildTransitive\\LibraryAPI.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

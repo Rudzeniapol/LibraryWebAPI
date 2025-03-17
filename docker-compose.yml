@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  libraryapi:
+    image: libraryapi
+    container_name: libraryapi
+    build:
+      context: .
+      dockerfile: LibraryAPI.API/Dockerfile 
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=LibraryDataBase;User Id=sa;Password=Passw0rd;TrustServerCertificate=True;
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql-db
+    hostname: mssql-db
+    environment:
+       ACCEPT_EULA: 'Y'
+       MSSQL_SA_PASSWORD: 'Passw0rd'
+       MSSQL_DATA_DIR: /var/opt/mssql/data
+       MSSQL_PID: 'Developer' 
+       MSSQL_TCP_PORT: 1433  
+    ports:
+      - "1433:1433" 
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:
