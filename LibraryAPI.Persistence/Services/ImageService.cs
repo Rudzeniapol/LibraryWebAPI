@@ -1,4 +1,4 @@
-﻿using LibraryAPI.Persistence.Services.Interfaces;
+﻿using LibraryAPI.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace LibraryAPI.Persistence.Services;

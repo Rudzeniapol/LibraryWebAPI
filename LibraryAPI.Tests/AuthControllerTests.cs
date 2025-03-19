@@ -3,9 +3,8 @@ using LibraryAPI.Application.Commands.User;
 using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.DTOs.MappingProfiles;
 using LibraryAPI.Application.Exceptions;
-using LibraryAPI.Persistence.Services.Interfaces;
+using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
-using LibraryAPI.Persistence.DTOs;
 using Moq;
 
 namespace LibraryAPI.Tests

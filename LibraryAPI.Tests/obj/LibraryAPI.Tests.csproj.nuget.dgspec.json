@@ -172,9 +172,6 @@
             "projectReferences": {
               "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.Domain\\LibraryAPI.Domain.csproj": {
                 "projectPath": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.Domain\\LibraryAPI.Domain.csproj"
-              },
-              "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.Persistence\\LibraryAPI.Persistence.csproj": {
-                "projectPath": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.Persistence\\LibraryAPI.Persistence.csproj"
               }
             }
           }
@@ -332,6 +329,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.Application\\LibraryAPI.Application.csproj": {
+                "projectPath": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.Application\\LibraryAPI.Application.csproj"
+              },
               "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.Domain\\LibraryAPI.Domain.csproj": {
                 "projectPath": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.Domain\\LibraryAPI.Domain.csproj"
               }

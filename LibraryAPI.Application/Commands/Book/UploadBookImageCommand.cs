@@ -1,7 +1,6 @@
 ﻿using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
 using LibraryAPI.Domain.Interfaces;
-using LibraryAPI.Persistence.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 

@@ -8,7 +8,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\LibraryAPI.Domain\LibraryAPI.Domain.csproj" />
-        <ProjectReference Include="..\LibraryAPI.Persistence\LibraryAPI.Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>

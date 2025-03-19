@@ -1,5 +1,4 @@
 ﻿using LibraryAPI.Domain.Interfaces;
-using LibraryAPI.Persistence.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

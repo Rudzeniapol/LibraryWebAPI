@@ -1,9 +1,8 @@
 ﻿using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
-using LibraryAPI.Persistence.Services;
-using LibraryAPI.Persistence.Services.Interfaces;
+using LibraryAPI.Application.Services;
+using LibraryAPI.Application.Services.Interfaces;
 using LibraryAPI.Domain.Interfaces;
-using LibraryAPI.Persistence.DTOs;
 using MediatR;
 
 namespace LibraryAPI.Application.Commands.User;

@@ -2,7 +2,6 @@ using LibraryAPI.Persistence.Data;
 using LibraryAPI.Persistence.Repositories;
 using LibraryAPI.Domain.Interfaces;
 using LibraryAPI.Persistence.Services;
-using LibraryAPI.Persistence.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +12,7 @@ using LibraryAPI.API.Extentions;
 using LibraryAPI.API.Middlewares;
 using LibraryAPI.Application.Commands.Book;
 using LibraryAPI.Application.Exceptions;
+using LibraryAPI.Application.Services.Interfaces;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);

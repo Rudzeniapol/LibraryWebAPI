@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
+using LibraryAPI.Application.DTOs;
 using LibraryAPI.Domain.Models;
-using LibraryAPI.Persistence.DTOs;
 
-namespace LibraryAPI.Persistence.Services.Interfaces;
+namespace LibraryAPI.Application.Services.Interfaces;
 
 public interface ITokenService
 {

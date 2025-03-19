@@ -2591,7 +2591,6 @@
           "AutoMapper": "14.0.0",
           "BCrypt.Net-Next": "4.0.0",
           "LibraryAPI.Domain": "1.0.0",
-          "LibraryAPI.Persistence": "1.0.0",
           "MediatR": "12.4.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.0",
           "Microsoft.EntityFrameworkCore": "9.0.2"
@@ -2621,6 +2620,7 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "BCrypt.Net-Next": "4.0.0",
+          "LibraryAPI.Application": "1.0.0",
           "LibraryAPI.Domain": "1.0.0",
           "Microsoft.AspNetCore.Hosting": "2.3.0",
           "Microsoft.AspNetCore.Hosting.Abstractions": "2.3.0",

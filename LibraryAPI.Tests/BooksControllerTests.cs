@@ -3,7 +3,6 @@ using LibraryAPI.Application.Commands.Book;
 using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Queries.Book;
 using LibraryAPI.Domain.Models;
-using LibraryAPI.Persistence.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +11,7 @@ using Xunit;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using LibraryAPI.Application.Services.Interfaces;
 
 namespace LibraryAPI.Tests
 {

@@ -1,5 +1,5 @@
 ﻿using LibraryAPI.Persistence.Data;
-using LibraryAPI.Persistence.Services.Interfaces;
+using LibraryAPI.Application.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryAPI.Persistence.Services;

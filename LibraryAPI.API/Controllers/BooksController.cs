@@ -6,7 +6,7 @@ using LibraryAPI.Application.Exceptions;
 using LibraryAPI.Application.Queries.Book;
 using LibraryAPI.Application.Queries.Notification;
 using LibraryAPI.Domain.Models;
-using LibraryAPI.Persistence.Services.Interfaces;
+using LibraryAPI.Application.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace LibraryAPI.Persistence.Services.Interfaces;
+namespace LibraryAPI.Application.Services.Interfaces;
 
 public interface IImageService
 {

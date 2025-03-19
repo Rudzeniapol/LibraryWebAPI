@@ -1,4 +1,4 @@
-﻿using LibraryAPI.Persistence.Services.Interfaces;
+﻿using LibraryAPI.Application.Services.Interfaces;
 using MediatR;
 
 namespace LibraryAPI.Application.Queries.Book;
