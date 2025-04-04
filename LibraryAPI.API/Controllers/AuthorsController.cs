@@ -50,7 +50,7 @@ namespace LibraryAPI.API.Controllers
             return CreatedAtAction(nameof(GetAuthor), new { id = newAuthorId }, command.Author);
         }
         
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = "AdminOnly")]   
         [HttpPut]
         public async Task<IActionResult> UpdateAuthor([FromBody] UpdateAuthorCommand command, CancellationToken cancellationToken)
         {

@@ -23,6 +23,7 @@ builder.Services.ConfigureAuthorization();
 builder.Services.ConfigureDependencyInjection();
 builder.Services.ConfigureAutoMapper();
 builder.Services.ConfigureValidation();
+builder.Services.ConfigureRequestServices();
 
 builder.Services.AddMemoryCache();
 builder.Services.AddAuthorization(); 
@@ -48,6 +49,7 @@ app.UseSwaggerUI();
 //UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseStaticFiles();
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 

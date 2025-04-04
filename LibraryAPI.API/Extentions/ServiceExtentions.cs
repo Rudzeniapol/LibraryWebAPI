@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Threading.RateLimiting;
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -22,6 +23,7 @@ using LibraryAPI.Persistence;
 using LibraryAPI.Persistence.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -75,6 +77,20 @@ public static class ServiceExtentions
         return services;
     }
 
+    public static IServiceCollection ConfigureRequestServices(this IServiceCollection services)
+    {
+        // Program.cs
+        services.AddRateLimiter(options => {
+            options.AddFixedWindowLimiter("api", limiter => {
+                limiter.PermitLimit = 100; // 100 запросов
+                limiter.Window = TimeSpan.FromSeconds(10); // за 10 секунд
+                limiter.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+            });
+        });
+
+        return services;
+    }
+    
     public static IServiceCollection ConfigureDatabaseContext(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");

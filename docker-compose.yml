@@ -26,7 +26,7 @@ services:
        MSSQL_PID: 'Developer' 
        MSSQL_TCP_PORT: 1433  
     ports:
-      - "1433:1433" 
+      - "1433:1433"
     volumes:
       - sql_data:/var/opt/mssql
 
