@@ -79,7 +79,6 @@ public static class ServiceExtentions
 
     public static IServiceCollection ConfigureRequestServices(this IServiceCollection services)
     {
-        // Program.cs
         services.AddRateLimiter(options => {
             options.AddFixedWindowLimiter("api", limiter => {
                 limiter.PermitLimit = 100; // 100 запросов

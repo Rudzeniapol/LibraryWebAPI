@@ -8,11 +8,13 @@ using LibraryAPI.Application.Commands.User;
 using LibraryAPI.Application.DTOs;
 using LibraryAPI.Application.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace LibraryAPI.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [EnableRateLimiting("api")]
     public class AuthController : ControllerBase
     {
         private IMediator _mediator;

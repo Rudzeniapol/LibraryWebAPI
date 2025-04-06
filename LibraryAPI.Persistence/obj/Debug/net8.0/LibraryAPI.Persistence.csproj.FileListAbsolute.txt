@@ -18,3 +18,23 @@ C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Persiste
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\ref\LibraryAPI.Persistence.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Application.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Application.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Persistence.deps.json
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Persistence.runtimeconfig.json
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Persistence.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Persistence.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Application.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Domain.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Application.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\bin\Debug\net8.0\LibraryAPI.Domain.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryAPI.Persistence.csproj.AssemblyReference.cache
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryAPI.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryAPI.Persistence.AssemblyInfoInputs.cache
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryAPI.Persistence.AssemblyInfo.cs
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryAPI.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryAPI.Persistence.sourcelink.json
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryA.FFDCFE4E.Up2Date
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryAPI.Persistence.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\refint\LibraryAPI.Persistence.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryAPI.Persistence.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\LibraryAPI.Persistence.genruntimeconfig.cache
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Persistence\obj\Debug\net8.0\ref\LibraryAPI.Persistence.dll

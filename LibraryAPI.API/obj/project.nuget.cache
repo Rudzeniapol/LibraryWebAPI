@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1MUOO4sNdNo=",
+  "dgSpecHash": "vyNIq2JDuNA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\LibraryAPI.API.csproj",
+  "projectFilePath": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\LibraryAPI.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ffgg9\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\ffgg9\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",

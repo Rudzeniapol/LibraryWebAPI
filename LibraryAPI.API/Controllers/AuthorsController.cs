@@ -6,12 +6,14 @@ using LibraryAPI.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace LibraryAPI.API.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
+    [EnableRateLimiting("api")]
     public class AuthorsController : ControllerBase
     {
         private readonly IMediator _mediator;

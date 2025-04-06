@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "s8d0idh3NGI=",
+  "dgSpecHash": "rCqgwmx590c=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.Persistence\\LibraryAPI.Persistence.csproj",
+  "projectFilePath": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.Persistence\\LibraryAPI.Persistence.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ffgg9\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\ffgg9\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",

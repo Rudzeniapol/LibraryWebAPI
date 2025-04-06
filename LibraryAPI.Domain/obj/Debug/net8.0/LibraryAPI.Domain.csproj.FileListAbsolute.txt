@@ -10,3 +10,15 @@ C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Domain\o
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\refint\LibraryAPI.Domain.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\LibraryAPI.Domain.pdb
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\ref\LibraryAPI.Domain.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\bin\Debug\net8.0\LibraryAPI.Domain.deps.json
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\bin\Debug\net8.0\LibraryAPI.Domain.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\bin\Debug\net8.0\LibraryAPI.Domain.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\LibraryAPI.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\LibraryAPI.Domain.AssemblyInfoInputs.cache
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\LibraryAPI.Domain.AssemblyInfo.cs
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\LibraryAPI.Domain.csproj.CoreCompileInputs.cache
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\LibraryAPI.Domain.sourcelink.json
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\LibraryAPI.Domain.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\refint\LibraryAPI.Domain.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\LibraryAPI.Domain.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Domain\obj\Debug\net8.0\ref\LibraryAPI.Domain.dll

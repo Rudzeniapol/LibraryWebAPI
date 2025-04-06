@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "xIKfVaHhBYLfyZr1h1EgWkWtnuPdVaL2QlKAFqAQx3U=",
+  "Hash": "JkQ8IoIF8g0piGdcur5wAGGradgq2Kuizg4MRusQm6I=",
   "Source": "LibraryAPI.API",
   "BasePath": "_content/LibraryAPI.API",
   "Mode": "Default",
@@ -10,125 +10,631 @@
     {
       "Name": "LibraryAPI.API\\wwwroot",
       "Source": "LibraryAPI.API",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\",
       "BasePath": "_content/LibraryAPI.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
+      "Identity": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
       "SourceId": "LibraryAPI.API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\",
       "BasePath": "_content/LibraryAPI.API",
-      "RelativePath": "uploads/John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
+      "RelativePath": "uploads/John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "bx1b4wlsvu",
+      "Integrity": "gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg"
     },
     {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg",
+      "Identity": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg",
       "SourceId": "LibraryAPI.API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\",
       "BasePath": "_content/LibraryAPI.API",
-      "RelativePath": "uploads/photo_2024-12-22_14-35-12.jpg",
+      "RelativePath": "uploads/photo_2024-12-22_14-35-12#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "bx1b4wlsvu",
+      "Integrity": "gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg"
     },
     {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png",
+      "Identity": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png",
       "SourceId": "LibraryAPI.API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\",
       "BasePath": "_content/LibraryAPI.API",
-      "RelativePath": "uploads/Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png",
+      "RelativePath": "uploads/Title_0eb441b9-8919-4a98-a41a-c79092ddeef1#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "hdkhe2er1b",
+      "Integrity": "m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png"
     },
     {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png",
+      "Identity": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png",
       "SourceId": "LibraryAPI.API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\",
       "BasePath": "_content/LibraryAPI.API",
-      "RelativePath": "uploads/Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png",
+      "RelativePath": "uploads/Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "hdkhe2er1b",
+      "Integrity": "m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png"
     },
     {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png",
+      "Identity": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png",
       "SourceId": "LibraryAPI.API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\",
       "BasePath": "_content/LibraryAPI.API",
-      "RelativePath": "uploads/Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png",
+      "RelativePath": "uploads/Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "ui0dz69g3z",
+      "Integrity": "5q6USinr6exmtBuQhYtSXCLHvR6imwaYzh7mSaXRbFE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png"
     },
     {
-      "Identity": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png",
+      "Identity": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png",
       "SourceId": "LibraryAPI.API",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ffgg9\\Desktop\\TestTasks\\LibraryWebAPI\\LibraryWebAPI\\LibraryAPI.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\",
       "BasePath": "_content/LibraryAPI.API",
-      "RelativePath": "uploads/Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png",
+      "RelativePath": "uploads/Title_cf96776e-f8ea-4f77-9151-a75168fc0314#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "hdkhe2er1b",
+      "Integrity": "m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "uploads/John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.bx1b4wlsvu.jpg",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "113736"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "bx1b4wlsvu"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\John Wick_c7418c15-79d4-4105-b8b3-a524c8a44849.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "113736"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/photo_2024-12-22_14-35-12.bx1b4wlsvu.jpg",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "113736"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "bx1b4wlsvu"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/photo_2024-12-22_14-35-12.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/photo_2024-12-22_14-35-12.jpg",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\photo_2024-12-22_14-35-12.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "113736"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gc062dWTqP2C5DLHYV2al1Xi6f13ae86Oj6QSID9HNM="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.hdkhe2er1b.png",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6880"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hdkhe2er1b"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_0eb441b9-8919-4a98-a41a-c79092ddeef1.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6880"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.hdkhe2er1b.png",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6880"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hdkhe2er1b"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_9bd830e6-377a-42e0-a195-4b9ac5c38b9c.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6880"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "132016"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5q6USinr6exmtBuQhYtSXCLHvR6imwaYzh7mSaXRbFE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5q6USinr6exmtBuQhYtSXCLHvR6imwaYzh7mSaXRbFE="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.ui0dz69g3z.png",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "132016"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5q6USinr6exmtBuQhYtSXCLHvR6imwaYzh7mSaXRbFE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ui0dz69g3z"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/Title_ac5f4a00-046b-4c40-bb12-fbb0f4c71c40.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-5q6USinr6exmtBuQhYtSXCLHvR6imwaYzh7mSaXRbFE="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Title_cf96776e-f8ea-4f77-9151-a75168fc0314.hdkhe2er1b.png",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6880"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hdkhe2er1b"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png",
+      "AssetFile": "C:\\Users\\ffgg9\\OneDrive\\Desktop\\Infinite Learning\\Mylearn\\C#_Studies\\LibWebAPI\\LibraryAPI.API\\wwwroot\\uploads\\Title_cf96776e-f8ea-4f77-9151-a75168fc0314.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6880"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 06 Apr 2025 20:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-m8gWRbCva0/qmsPL+fmqa74nB7ATv3+S6+bJApbvv2M="
+        }
+      ]
     }
   ]
 }

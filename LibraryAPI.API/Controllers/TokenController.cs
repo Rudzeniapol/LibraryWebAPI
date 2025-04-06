@@ -3,11 +3,13 @@ using LibraryAPI.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace LibraryAPI.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[EnableRateLimiting("api")]
 public class TokenController : ControllerBase
 {
     private readonly IMediator _mediator;

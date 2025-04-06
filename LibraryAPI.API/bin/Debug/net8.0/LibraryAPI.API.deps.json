@@ -1708,7 +1708,7 @@
         },
         "runtime": {
           "LibraryAPI.Application.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -1716,7 +1716,7 @@
       "LibraryAPI.Domain/1.0.0": {
         "runtime": {
           "LibraryAPI.Domain.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -1734,7 +1734,7 @@
         },
         "runtime": {
           "LibraryAPI.Persistence.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }

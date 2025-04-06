@@ -14,3 +14,19 @@ C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Applicat
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Application\obj\Debug\net8.0\refint\LibraryAPI.Application.dll
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryAPI.Application.pdb
 C:\Users\ffgg9\Desktop\TestTasks\LibraryWebAPI\LibraryWebAPI\LibraryAPI.Application\obj\Debug\net8.0\ref\LibraryAPI.Application.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\bin\Debug\net8.0\LibraryAPI.Application.deps.json
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\bin\Debug\net8.0\LibraryAPI.Application.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\bin\Debug\net8.0\LibraryAPI.Application.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\bin\Debug\net8.0\LibraryAPI.Domain.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\bin\Debug\net8.0\LibraryAPI.Domain.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryAPI.Application.csproj.AssemblyReference.cache
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryAPI.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryAPI.Application.AssemblyInfoInputs.cache
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryAPI.Application.AssemblyInfo.cs
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryAPI.Application.csproj.CoreCompileInputs.cache
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryAPI.Application.sourcelink.json
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryA.31F1671D.Up2Date
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryAPI.Application.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\refint\LibraryAPI.Application.dll
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\LibraryAPI.Application.pdb
+C:\Users\ffgg9\OneDrive\Desktop\Infinite Learning\Mylearn\C#_Studies\LibWebAPI\LibraryAPI.Application\obj\Debug\net8.0\ref\LibraryAPI.Application.dll
